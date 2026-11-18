@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+:root {
+  --ks-green-primary: #075b32;
+  --ks-green-dark: #023d24;
+  --ks-green-deep: #012b19;
+  --ks-green-secondary: #138447;
+  --ks-yellow-bright: #ffd629;
+  --ks-gold: #d9a928;
+  --ks-gold-soft: #f5e2a3;
+  --ks-white: #ffffff;
+  --ks-bg: #f8faf4;
+  --ks-surface-tint: #eff5e9;
+  --ks-text: #183527;
+  --ks-text-muted: #436153;
+  --ks-border: rgba(7, 91, 50, 0.14);
+  --ks-gold-border: rgba(217, 169, 40, 0.42);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.25rem;
+    background-color: var(--ks-bg);
+    color: var(--ks-text);
+    font-family: "Noto Sans Tamil", "Inter", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  html[lang="en"] {
+    font-family: "Inter", "Noto Sans Tamil", system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--ks-bg);
+    color: var(--ks-text);
+    overflow-x: clip;
+    line-height: 1.65;
+  }
+
+  #root {
+    overflow-x: clip;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  button,
+  a {
+    touch-action: manipulation;
+  }
+
+  :focus-visible {
+    outline: 2.5px solid var(--ks-gold);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Official brand gradients & patterns */
+.ks-hero-bg {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(255, 214, 41, 0.14), transparent 46%),
+    radial-gradient(circle at 12% 85%, rgba(19, 132, 71, 0.34), transparent 48%),
+    linear-gradient(135deg, #012b19 0%, #023d24 44%, #075b32 100%);
+}
+
+.ks-president-bg {
+  background:
+    radial-gradient(circle at 16% 24%, rgba(217, 169, 40, 0.15), transparent 44%),
+    radial-gradient(circle at 88% 80%, rgba(19, 132, 71, 0.25), transparent 48%),
+    linear-gradient(155deg, #023d24 0%, #044a2a 52%, #075b32 100%);
+}
+
+.ks-gold-text {
+  background: linear-gradient(135deg, #ffe46b 0%, #ffd629 45%, #d9a928 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ks-gold-rule {
+  height: 3px;
+  width: 4.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #ffd629 0%, #d9a928 65%, rgba(217, 169, 40, 0.15) 100%);
+}
+
+.ks-ornament-pattern {
+  background-image:
+    radial-gradient(rgba(255, 214, 41, 0.14) 1px, transparent 1px),
+    radial-gradient(rgba(255, 214, 41, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+}
+
+/* Native <dialog> modal scroll containment & styling (modern-web-guidance) */
+dialog {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  max-width: none;
+  max-height: none;
+}
+
+dialog[open] {
+  display: flex;
+}
+
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  background: rgba(1, 28, 17, 0.86);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Scroll-driven reveal animations with progressive enhancement + IntersectionObserver fallback */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @keyframes ks-reveal-up {
+      from {
+        opacity: 0.01;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .ks-reveal {
+      animation: ks-reveal-up auto linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 24%;
+    }
+  }
+}
+
+.ks-reveal-fallback {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 560ms cubic-bezier(0.22, 1, 0.36, 1), transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ks-reveal-fallback.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Post-interaction form validation (:user-invalid / :user-valid + JS fallback) */
+.ks-input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1.5px solid rgba(7, 91, 50, 0.22);
+  background-color: #ffffff;
+  padding: 0.75rem 0.95rem;
+  font-size: 0.95rem;
+  color: var(--ks-text);
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.ks-input:focus {
+  border-color: var(--ks-green-primary);
+  box-shadow: 0 0 0 3px rgba(7, 91, 50, 0.14);
+  outline: none;
+}
+
+.ks-input:is(:user-invalid, .user-invalid-fallback) {
+  border-color: #c62828;
+  background-color: #fff7f7;
+}
+
+.ks-input:is(:user-valid, .user-valid-fallback) {
+  border-color: var(--ks-green-secondary);
+}
+
+.ks-error-msg {
+  display: none;
+  margin-top: 0.35rem;
+  font-size: 0.84rem;
+  color: #b71c1c;
+  font-weight: 500;
+}
+
+.ks-input:is(:user-invalid, .user-invalid-fallback) + .ks-error-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+/* Screen-reader only utility */
+.visually-hidden:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
+}
