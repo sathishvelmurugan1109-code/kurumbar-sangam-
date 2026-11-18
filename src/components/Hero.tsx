@@ -32,7 +32,7 @@ export function Hero({ content, onOpenImageById }: HeroProps) {
       />
 
       <div className="ks-container relative pb-10 pt-6 sm:pb-14 sm:pt-10 lg:pb-16 lg:pt-14">
-        <div className="grid items-center gap-7 lg:min-h-[28rem] lg:grid-cols-12 lg:gap-10">
+        <div className="grid grid-cols-1 items-center gap-7 lg:min-h-[28rem] lg:grid-cols-12 lg:gap-10">
           {/* Left Column: Official Branding, Motto, Leader Banner & Touch-First CTAs */}
           <div className="min-w-0 lg:col-span-7">
             <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-[#FFD629]/45 bg-[#012B19]/80 px-3.5 py-1.5 text-[0.82rem] font-semibold text-[#FFD629] sm:text-sm">
@@ -161,8 +161,8 @@ export function Hero({ content, onOpenImageById }: HeroProps) {
                   </p>
                 </div>
 
-                {/* Paired Authentic Event Photographs (Strict 3:2 aspect ratio) */}
-                <div className="mt-4 grid grid-cols-2 gap-3 sm:mt-5">
+                {/* Paired Authentic Event Photographs (1-Col on ultra-narrow 320px, 2-Col at 420px+) */}
+                <div className="mt-4 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:mt-5">
                   <button
                     type="button"
                     onClick={() => onOpenImageById('public-meeting-podium')}
@@ -213,7 +213,7 @@ export function Hero({ content, onOpenImageById }: HeroProps) {
         </div>
 
         {/* Institutional Portal Quick-Navigation Strip (Mobile-First 1 -> 2 -> 4 Columns) */}
-        <div className="mt-8 grid gap-3.5 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-3.5 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
           {content.hero.quickStrip.map((item) => (
             <a
               key={item.id}

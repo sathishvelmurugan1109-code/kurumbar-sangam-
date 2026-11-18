@@ -206,7 +206,7 @@ export function Contact({ content, language }: ContactProps) {
           <p className="ks-body mt-4 text-[#355244]">{content.contact.subtitle}</p>
         </div>
 
-        <div className="mt-10 grid gap-7 lg:grid-cols-12">
+        <div className="mt-10 grid grid-cols-1 gap-7 lg:grid-cols-12">
           {/* Left: Official Contact Card */}
           <aside className="ks-reveal flex flex-col justify-between overflow-hidden rounded-2xl border border-[#D9A928]/45 bg-gradient-to-br from-[#023D24] via-[#054A2A] to-[#075B32] p-5 text-white shadow-[0_18px_46px_rgba(2,61,36,0.22)] sm:rounded-3xl sm:p-8 lg:col-span-5">
             <div>
@@ -315,7 +315,7 @@ export function Contact({ content, language }: ContactProps) {
             </div>
 
             <form ref={formRef} onSubmit={handleWhatsAppSubmit} className="mt-6 space-y-5">
-              <div className="grid gap-5 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <div>
                   <label
                     htmlFor="contact-name"

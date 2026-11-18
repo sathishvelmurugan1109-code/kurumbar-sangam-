@@ -104,7 +104,7 @@ export function Announcements({ content, onOpenImageById }: AnnouncementsProps) 
         </div>
 
         {/* Sample Announcement Cards (1-Col Mobile -> 3-Col Desktop) */}
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
           {content.announcements.items.map((item) => (
             <article
               key={item.id}
@@ -157,7 +157,7 @@ export function Announcements({ content, onOpenImageById }: AnnouncementsProps) 
             </a>
           </div>
 
-          <div className="mt-6 grid gap-5 sm:grid-cols-3">
+          <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-3">
             {content.announcements.posters.map((poster) => (
               <button
                 key={poster.id}

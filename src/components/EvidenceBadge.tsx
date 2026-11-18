@@ -35,12 +35,14 @@ export function EvidenceBadge({ type, research, size = 'sm' }: EvidenceBadgeProp
   return (
     <span
       title={research.evidenceDescriptions[type]}
-      className={`inline-flex items-center gap-1.5 rounded-full border font-bold leading-snug ${wrapper} ${
+      className={`inline-flex max-w-full items-center gap-1.5 rounded-full border font-bold leading-snug whitespace-normal break-words [word-break:normal] ${wrapper} ${
         size === 'sm' ? 'px-3 py-1 text-[0.8125rem]' : 'px-3.5 py-1.5 text-sm'
       }`}
     >
       <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-      <span>{research.evidenceLabels[type]}</span>
+      <span className="min-w-0 [word-break:normal] [overflow-wrap:break-word]">
+        {research.evidenceLabels[type]}
+      </span>
     </span>
   )
 }
@@ -59,7 +61,7 @@ export function SourcePills({ sourceIds, label, dark = false }: SourcePillsProps
   if (validSources.length === 0) return null
 
   return (
-    <div className="mt-4 flex flex-wrap items-center gap-2">
+    <div className="mt-4 flex w-full flex-wrap items-center gap-2">
       {label && (
         <span
           className={`text-[0.84rem] font-bold ${
@@ -73,7 +75,7 @@ export function SourcePills({ sourceIds, label, dark = false }: SourcePillsProps
         <a
           key={src.id}
           href={`#source-${src.id}`}
-          className={`inline-flex min-h-[36px] items-center rounded-lg border px-3 py-1 text-[0.8125rem] font-bold transition-colors ${
+          className={`inline-flex min-h-[36px] items-center rounded-lg border px-3 py-1 text-[0.8125rem] font-bold whitespace-nowrap transition-colors ${
             dark
               ? 'border-[#FFD629]/40 bg-[#012B19]/80 text-[#FFD629] hover:bg-[#FFD629] hover:text-[#023D24]'
               : 'border-[#075B32]/22 bg-[#F2F7F0] text-[#075B32] hover:border-[#075B32] hover:bg-[#075B32] hover:text-[#FFD629]'

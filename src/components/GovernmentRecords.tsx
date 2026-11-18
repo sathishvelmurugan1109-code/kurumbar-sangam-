@@ -38,8 +38,8 @@ export function GovernmentRecords({ research, language }: GovernmentRecordsProps
         className="ks-section ks-deferred-section bg-[#EFF5E9]"
       >
         <div className="ks-container">
-          <div className="grid items-center gap-7 lg:grid-cols-12 lg:gap-12">
-            <div className="ks-reveal min-w-0 lg:col-span-6">
+          <div className="grid grid-cols-1 items-center gap-7 lg:grid-cols-12 lg:gap-12">
+            <div className="ks-reveal w-full min-w-0 lg:col-span-6">
               <SectionMediaCard registryKey="government-records" language={language} />
             </div>
 
@@ -163,20 +163,18 @@ export function GovernmentRecords({ research, language }: GovernmentRecordsProps
               </div>
             </div>
 
-            <div className="mt-6 grid gap-5 lg:grid-cols-3">
+            <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-3">
               {governmentRecords.unresolvedIssues.map((issue) => (
                 <article
                   key={issue.id}
-                  className="ks-reveal flex flex-col justify-between rounded-2xl border border-[#075B32]/14 bg-white p-5 shadow-xs sm:p-6"
+                  className="ks-reveal flex w-full min-w-0 flex-col justify-between rounded-2xl border border-[#075B32]/14 bg-white p-5 shadow-xs sm:p-6"
                 >
-                  <div>
-                    {issue.evidence && (
-                      <div className="mb-3">
-                        <EvidenceBadge type={issue.evidence} research={research} />
-                      </div>
-                    )}
-                    <h4 className="ks-h3 font-extrabold text-[#023D24]">{issue.title}</h4>
-                    <p className="ks-body mt-2.5 text-[#2C4A3B]">{issue.summary}</p>
+                  <div className="w-full min-w-0">
+                    <div className="flex w-full flex-col items-start gap-2.5">
+                      <h4 className="ks-h3 w-full font-extrabold text-[#023D24]">{issue.title}</h4>
+                      {issue.evidence && <EvidenceBadge type={issue.evidence} research={research} />}
+                    </div>
+                    <p className="ks-body mt-3 w-full text-[#2C4A3B]">{issue.summary}</p>
                     <div className="mt-4 rounded-xl border border-[#D9A928]/45 bg-[#FFFBE8] p-3.5 text-[0.9rem] leading-relaxed text-[#5E4500]">
                       {issue.constitutionalRule}
                     </div>
@@ -196,8 +194,8 @@ export function GovernmentRecords({ research, language }: GovernmentRecordsProps
         className="ks-section ks-deferred-section bg-[#F8FAF4]"
       >
         <div className="ks-container">
-          <div className="grid items-center gap-7 lg:grid-cols-12 lg:gap-12">
-            <div className="ks-reveal min-w-0 lg:order-2 lg:col-span-6">
+          <div className="grid grid-cols-1 items-center gap-7 lg:grid-cols-12 lg:gap-12">
+            <div className="ks-reveal w-full min-w-0 lg:order-2 lg:col-span-6">
               <SectionMediaCard registryKey="documents-research" language={language} />
             </div>
 
@@ -264,14 +262,14 @@ export function GovernmentRecords({ research, language }: GovernmentRecordsProps
           </div>
 
           {/* Bibliography Cards Grid (1-Col Mobile -> 2-Col Desktop) */}
-          <div className="mt-6 grid gap-5 md:grid-cols-2">
+          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
             {filteredSources.map((src) => (
               <article
                 key={src.id}
                 id={`source-${src.id}`}
-                className="ks-reveal flex flex-col justify-between rounded-2xl border border-[#075B32]/14 bg-white p-5 shadow-xs scroll-mt-28 target:border-[#D9A928] target:ring-2 target:ring-[#FFD629] sm:p-6"
+                className="ks-reveal flex w-full min-w-0 flex-col justify-between rounded-2xl border border-[#075B32]/14 bg-white p-5 shadow-xs scroll-mt-28 target:border-[#D9A928] target:ring-2 target:ring-[#FFD629] sm:p-6"
               >
-                <div>
+                <div className="w-full min-w-0">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="rounded-full bg-[#075B32]/10 px-3 py-1 text-[0.82rem] font-extrabold text-[#075B32]">
                       {src.shortLabel}

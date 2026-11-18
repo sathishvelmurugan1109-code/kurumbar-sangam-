@@ -26,7 +26,7 @@ export function Events({ content, onOpenImageById }: EventsProps) {
           <p className="ks-body mt-4 text-[#355244]">{content.events.subtitle}</p>
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {content.events.items.map((event) => (
             <article
               key={event.id}
@@ -43,7 +43,7 @@ export function Events({ content, onOpenImageById }: EventsProps) {
                   roundedClass="rounded-none"
                   imgClassName="transition-transform duration-500 group-hover:scale-[1.03]"
                 />
-                <span className="absolute left-3 top-3 rounded-full border border-[#FFD629]/50 bg-[#023D24]/92 px-3 py-1 text-[0.8rem] font-bold text-[#FFD629] backdrop-blur-sm">
+                <span className="absolute left-3 top-3 max-w-[calc(100%-1.5rem)] truncate rounded-full border border-[#FFD629]/50 bg-[#023D24]/92 px-3 py-1 text-[0.8rem] font-bold text-[#FFD629] backdrop-blur-sm">
                   {event.categoryTag}
                 </span>
               </div>

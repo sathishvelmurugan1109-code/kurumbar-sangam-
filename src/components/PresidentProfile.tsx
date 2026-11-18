@@ -49,7 +49,7 @@ export function PresidentProfile({ content, onOpenImageById }: PresidentProfileP
 
         {/* Main Institutional Profile Card */}
         <div className="ks-reveal mx-auto mt-8 max-w-5xl overflow-hidden rounded-2xl border border-[#D9A928]/45 bg-[#012B19]/80 shadow-[0_20px_55px_rgba(0,0,0,0.36)] backdrop-blur-md sm:mt-10 sm:rounded-3xl">
-          <div className="grid items-center gap-7 p-5 sm:p-8 lg:grid-cols-12 lg:gap-10 lg:p-10">
+          <div className="grid grid-cols-1 items-center gap-7 p-5 sm:p-8 lg:grid-cols-12 lg:gap-10 lg:p-10">
             {/* Portrait Column */}
             <div className="flex flex-col items-center lg:col-span-5">
               <div

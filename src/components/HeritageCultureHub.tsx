@@ -20,7 +20,7 @@ export function HeritageCultureHub({ research, language }: HeritageCultureHubPro
       {/* Touch-Friendly Scrollable Quick-Jump Strip for Sections 05–12 */}
       <div className="border-b border-[#075B32]/12 bg-[#023D24] text-white">
         <div className="ks-container py-4">
-          <p className="mb-3 text-[0.82rem] font-extrabold tracking-wide text-[#FFD629]">
+          <p className="mb-3 text-[0.84rem] font-extrabold tracking-wide text-[#FFD629]">
             {stripTitle}
           </p>
           <div
@@ -33,7 +33,7 @@ export function HeritageCultureHub({ research, language }: HeritageCultureHubPro
               <a
                 key={sec.id}
                 href={`#${sec.id}`}
-                className="inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full border border-[#FFD629]/40 bg-[#012B19]/90 px-4 py-2 text-[0.875rem] font-bold text-[#F5E2A3] transition-colors hover:border-[#FFD629] hover:bg-[#FFD629] hover:text-[#023D24]"
+                className="inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full border border-[#FFD629]/40 bg-[#012B19]/90 px-4 py-2 text-[0.875rem] font-bold whitespace-nowrap text-[#F5E2A3] transition-colors hover:border-[#FFD629] hover:bg-[#FFD629] hover:text-[#023D24]"
               >
                 <span className="text-[0.8rem] opacity-85">{sec.sectionNumber}</span>
                 <span>{sec.heading}</span>
@@ -43,7 +43,7 @@ export function HeritageCultureHub({ research, language }: HeritageCultureHubPro
         </div>
       </div>
 
-      {/* Individual Semantic Sections 05 through 12 (Image-First Mobile, Alternating 6/6 Desktop) */}
+      {/* Individual Semantic Sections 05 through 12 (Full-Width 1-Col Mobile, Alternating 6/6 Desktop) */}
       {heritageSections.map((sec, idx) => {
         const isEven = idx % 2 === 0
         return (
@@ -54,17 +54,17 @@ export function HeritageCultureHub({ research, language }: HeritageCultureHubPro
             className={`ks-section ks-deferred-section ${isEven ? 'bg-[#EFF5E9]' : 'bg-[#F8FAF4]'}`}
           >
             <div className="ks-container">
-              <div className="grid items-start gap-7 lg:grid-cols-12 lg:gap-12">
+              <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-12 lg:gap-12">
                 {/* Media Column (Always on top on mobile; alternates Left/Right on desktop) */}
                 <div
-                  className={`ks-reveal min-w-0 lg:col-span-6 ${
+                  className={`ks-reveal w-full min-w-0 lg:col-span-6 ${
                     !isEven ? 'lg:order-2' : ''
                   }`}
                 >
                   <SectionMediaCard registryKey={sec.id} language={language} />
 
-                  <div className="mt-4 rounded-2xl border border-[#075B32]/14 bg-white p-4 shadow-xs sm:p-5">
-                    <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="mt-4 w-full rounded-2xl border border-[#075B32]/14 bg-white p-4 shadow-xs sm:p-5">
+                    <div className="flex flex-wrap items-center justify-between gap-2.5">
                       {sec.evidence && (
                         <EvidenceBadge type={sec.evidence} research={research} size="md" />
                       )}
@@ -81,46 +81,51 @@ export function HeritageCultureHub({ research, language }: HeritageCultureHubPro
 
                 {/* Editorial Content Column */}
                 <div
-                  className={`ks-reveal min-w-0 lg:col-span-6 ${
+                  className={`ks-reveal w-full min-w-0 lg:col-span-6 ${
                     !isEven ? 'lg:order-1' : ''
                   }`}
                 >
-                  <p className="text-[0.82rem] font-extrabold uppercase tracking-[0.14em] text-[#138447] sm:text-sm">
+                  <p className="text-[0.84rem] font-extrabold uppercase tracking-[0.14em] text-[#138447]">
                     {sec.sectionNumber} • {sec.eyebrow}
                   </p>
-                  <h2 id={`${sec.id}-heading`} className="ks-h2 mt-2 font-extrabold text-[#023D24]">
+                  <h2
+                    id={`${sec.id}-heading`}
+                    className="ks-h2 mt-2 w-full font-extrabold text-[#023D24]"
+                  >
                     {sec.heading}
                   </h2>
                   <div className="ks-gold-rule mt-3.5" aria-hidden="true" />
-                  <p className="mt-3.5 text-[1rem] font-semibold leading-relaxed text-[#355244] sm:text-[1.06rem]">
+                  <p className="mt-3.5 w-full text-[1rem] font-semibold leading-relaxed text-[#355244] sm:text-[1.06rem]">
                     {sec.subtitle}
                   </p>
-                  <p className="ks-body mt-3.5 text-[#183527]">{sec.overview}</p>
+                  <p className="ks-body mt-3.5 w-full text-[#183527]">{sec.overview}</p>
 
-                  {/* Touch-Friendly Native Accordions (<details> min-h 56px) */}
-                  <div className="mt-6 space-y-3.5">
+                  {/* Mobile-First Native Accordions: Full-Width Heading Row + Separate Badge Row */}
+                  <div className="mt-6 space-y-4">
                     {sec.keyFacts.map((fact, factIdx) => (
                       <details
                         key={factIdx}
                         open={factIdx === 0}
-                        className="ks-accordion-item overflow-hidden rounded-2xl border border-[#075B32]/15 bg-white shadow-xs"
+                        className="ks-accordion-item w-full overflow-hidden rounded-2xl border border-[#075B32]/15 bg-white shadow-xs"
                       >
-                        <summary className="ks-accordion-summary flex min-h-[56px] cursor-pointer flex-wrap items-center justify-between gap-2.5 px-4 py-3.5 text-[1rem] font-extrabold leading-snug text-[#023D24] transition-colors hover:bg-[#F8FAF4] sm:px-5 sm:text-[1.05rem]">
-                          <span className="flex min-w-0 flex-1 items-center gap-3">
+                        <summary className="ks-accordion-summary flex min-h-[56px] w-full cursor-pointer flex-col items-start gap-2.5 px-4 py-4 text-left transition-colors hover:bg-[#F8FAF4] sm:px-5">
+                          <div className="flex w-full items-start gap-3">
                             <ChevronDown
-                              className="ks-accordion-chevron h-5 w-5 shrink-0 text-[#075B32]"
+                              className="ks-accordion-chevron mt-1 h-5 w-5 shrink-0 text-[#075B32]"
                               aria-hidden="true"
                             />
-                            <span className="min-w-0">{fact.heading}</span>
-                          </span>
-                          {fact.evidence && (
-                            <span className="shrink-0">
-                              <EvidenceBadge type={fact.evidence} research={research} />
+                            <span className="min-w-0 flex-1 text-[1.125rem] font-extrabold leading-[1.45] text-[#023D24] [word-break:normal] [overflow-wrap:break-word] [white-space:normal] sm:text-[1.2rem]">
+                              {fact.heading}
                             </span>
+                          </div>
+                          {fact.evidence && (
+                            <div className="w-full pl-8">
+                              <EvidenceBadge type={fact.evidence} research={research} />
+                            </div>
                           )}
                         </summary>
-                        <div className="border-t border-[#075B32]/10 bg-[#FCFDF9] px-4 py-4 sm:px-5 sm:py-5">
-                          <p className="ks-body text-[#2C4A3B]">{fact.text}</p>
+                        <div className="w-full border-t border-[#075B32]/10 bg-[#FCFDF9] px-4 py-4 sm:px-5 sm:py-5">
+                          <p className="ks-body w-full text-[#2C4A3B]">{fact.text}</p>
                           <SourcePills
                             sourceIds={fact.sourceIds}
                             label={research.sourcesHeadingLabel}

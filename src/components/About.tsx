@@ -22,7 +22,7 @@ export function About({ content, onOpenImageById }: AboutProps) {
       className="ks-section relative bg-[#F8FAF4]"
     >
       <div className="ks-container">
-        <div className="grid items-center gap-7 lg:grid-cols-12 lg:gap-12">
+        <div className="grid grid-cols-1 items-center gap-7 lg:grid-cols-12 lg:gap-12">
           {/* Supporting Association Meeting Photograph (Strict 3:2 ratio, Top on Mobile) */}
           <div className="ks-reveal min-w-0 lg:col-span-6">
             <div className="relative">
@@ -81,7 +81,7 @@ export function About({ content, onOpenImageById }: AboutProps) {
         </div>
 
         {/* Three Visual Highlight Cards (Single-Column Mobile -> 3-Col Desktop) */}
-        <div className="mt-10 grid gap-5 sm:mt-14 md:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:mt-14 md:grid-cols-3">
           {content.about.highlights.map((card) => {
             const Icon = HIGHLIGHT_ICONS[card.icon]
             return (

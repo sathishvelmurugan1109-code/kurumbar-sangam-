@@ -44,9 +44,12 @@
     margin: 0;
     background-color: var(--ks-bg);
     color: var(--ks-text);
-    line-height: 1.75;
+    line-height: 1.8;
     font-size: 16px;
+    word-break: normal;
     overflow-wrap: break-word;
+    white-space: normal;
+    hyphens: none;
   }
 
   #root {
@@ -59,18 +62,26 @@
   h2,
   h3,
   h4 {
+    word-break: normal;
     overflow-wrap: break-word;
+    white-space: normal;
+    hyphens: none;
     text-wrap: balance;
   }
 
   p,
   li,
-  dd {
+  dd,
+  dt,
+  figcaption {
+    word-break: normal;
     overflow-wrap: break-word;
+    white-space: normal;
+    hyphens: none;
     text-wrap: pretty;
   }
 
-  :where(a, code) {
+  code {
     overflow-wrap: anywhere;
   }
 
@@ -122,19 +133,19 @@
 }
 
 .ks-h3 {
-  font-size: clamp(1.125rem, 1.04rem + 0.36vw, 1.38rem);
-  line-height: 1.38;
+  font-size: clamp(1.25rem, 1.15rem + 0.35vw, 1.42rem);
+  line-height: 1.42;
 }
 
 .ks-body {
   font-size: 1rem;
-  line-height: 1.78;
+  line-height: 1.82;
 }
 
 @media (min-width: 640px) {
   .ks-body {
-    font-size: 1.04rem;
-    line-height: 1.76;
+    font-size: 1.0625rem;
+    line-height: 1.8;
   }
 }
 

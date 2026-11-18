@@ -65,7 +65,7 @@ export function Gallery({ content, language, onOpenLightbox }: GalleryProps) {
         </div>
 
         {/* Mobile-First 1-Col (<640px) -> 2-Col (sm) -> 3-Col (lg) Gallery Grid */}
-        <div className="mt-8 grid gap-5 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
           {filteredItems.map((item, idx) => {
             const isPosterOrEmblem = item.displayMode === 'contain'
             return (

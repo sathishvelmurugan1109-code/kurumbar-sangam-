@@ -21,24 +21,24 @@ export function HistoryChronicle({ research, language }: HistoryChronicleProps) 
       >
         <div className="ks-container">
           {/* Single-Column Mobile (Image Top) -> 2-Column Balanced Desktop */}
-          <div className="grid items-center gap-7 lg:grid-cols-12 lg:gap-12">
-            <div className="ks-reveal min-w-0 lg:col-span-6">
+          <div className="grid grid-cols-1 items-center gap-7 lg:grid-cols-12 lg:gap-12">
+            <div className="ks-reveal w-full min-w-0 lg:col-span-6">
               <SectionMediaCard registryKey="history" language={language} />
             </div>
 
-            <div className="ks-reveal min-w-0 lg:col-span-6">
-              <p className="text-[0.82rem] font-extrabold uppercase tracking-[0.14em] text-[#138447] sm:text-sm">
+            <div className="ks-reveal w-full min-w-0 lg:col-span-6">
+              <p className="text-[0.84rem] font-extrabold uppercase tracking-[0.14em] text-[#138447]">
                 {completeHistory.sectionNumber} • {completeHistory.eyebrow}
               </p>
-              <h2 id="history-heading" className="ks-h2 mt-2 font-extrabold text-[#023D24]">
+              <h2 id="history-heading" className="ks-h2 mt-2 w-full font-extrabold text-[#023D24]">
                 {completeHistory.heading}
               </h2>
               <div className="ks-gold-rule mt-3.5" aria-hidden="true" />
-              <p className="mt-4 text-[1rem] font-semibold leading-relaxed text-[#355244] sm:text-[1.06rem]">
+              <p className="mt-4 w-full text-[1rem] font-semibold leading-relaxed text-[#355244] sm:text-[1.06rem]">
                 {completeHistory.subtitle}
               </p>
 
-              <div className="ks-body mt-4 space-y-4 text-[#183527]">
+              <div className="ks-body mt-4 w-full space-y-4 text-[#183527]">
                 {completeHistory.introParagraphs.map((para, idx) => (
                   <p key={idx}>{para}</p>
                 ))}
@@ -47,7 +47,7 @@ export function HistoryChronicle({ research, language }: HistoryChronicleProps) 
           </div>
 
           {/* Evidence Legend Strip */}
-          <div className="ks-reveal mt-8 rounded-2xl border border-[#075B32]/15 bg-white p-4 shadow-xs sm:mt-10 sm:p-5">
+          <div className="ks-reveal mt-8 w-full rounded-2xl border border-[#075B32]/15 bg-white p-4 shadow-xs sm:mt-10 sm:p-5">
             <div className="flex flex-wrap items-center justify-center gap-2">
               {(['documented', 'academic', 'oral'] as const).map((ev) => (
                 <EvidenceBadge key={ev} type={ev} research={research} size="sm" />
@@ -59,11 +59,11 @@ export function HistoryChronicle({ research, language }: HistoryChronicleProps) 
           </div>
 
           {/* Community Identity Distinction Matrix (Cards on Mobile/Tablet, Table on Desktop) */}
-          <div className="ks-reveal mt-8 overflow-hidden rounded-2xl border border-[#075B32]/18 bg-white shadow-[0_12px_32px_rgba(7,91,50,0.08)] sm:mt-10 sm:rounded-3xl">
+          <div className="ks-reveal mt-8 w-full overflow-hidden rounded-2xl border border-[#075B32]/18 bg-white shadow-[0_12px_32px_rgba(7,91,50,0.08)] sm:mt-10 sm:rounded-3xl">
             <div className="border-b border-[#D9A928]/35 bg-[#023D24] px-4 py-4 text-white sm:px-7 sm:py-5">
               <div className="flex items-start gap-3">
                 <Scale className="mt-1 h-5 w-5 shrink-0 text-[#FFD629]" aria-hidden="true" />
-                <div>
+                <div className="min-w-0 flex-1">
                   <h3 className="ks-h3 font-extrabold text-[#FFD629]">
                     {completeHistory.identityMatrixTitle}
                   </h3>
@@ -123,15 +123,15 @@ export function HistoryChronicle({ research, language }: HistoryChronicleProps) 
               </table>
             </div>
 
-            {/* Mobile & Tablet Spacious Readable Card Stack */}
+            {/* Mobile & Tablet Spacious Readable Card Stack (Heading Row + Separate Badge Row) */}
             <div className="divide-y divide-[#075B32]/12 lg:hidden">
               {completeHistory.identities.map((row) => (
-                <article key={row.id} className="p-4 sm:p-6">
-                  <div className="flex flex-wrap items-start justify-between gap-2.5">
-                    <h4 className="ks-h3 font-extrabold text-[#023D24]">{row.name}</h4>
+                <article key={row.id} className="w-full p-4 sm:p-6">
+                  <div className="flex w-full flex-col items-start gap-2.5">
+                    <h4 className="ks-h3 w-full font-extrabold text-[#023D24]">{row.name}</h4>
                     {row.evidence && <EvidenceBadge type={row.evidence} research={research} />}
                   </div>
-                  <dl className="mt-3.5 space-y-2.5 text-[0.96rem] leading-relaxed text-[#2C4A3B]">
+                  <dl className="ks-body mt-4 space-y-3 text-[#2C4A3B]">
                     <div>
                       <dt className="font-extrabold text-[#075B32]">
                         {completeHistory.identityTableHeaders.region}:
@@ -168,23 +168,25 @@ export function HistoryChronicle({ research, language }: HistoryChronicleProps) 
             <h3 className="ks-h2 font-extrabold text-[#023D24]">
               {completeHistory.historicalArcTitle}
             </h3>
-            <div className="mt-5 grid gap-5 md:grid-cols-2">
+            <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
               {completeHistory.historicalArc.map((point, index) => (
                 <article
                   key={index}
-                  className="ks-reveal flex flex-col justify-between rounded-2xl border border-[#075B32]/14 bg-white p-5 shadow-xs sm:p-6"
+                  className="ks-reveal flex w-full min-w-0 flex-col justify-between rounded-2xl border border-[#075B32]/14 bg-white p-5 shadow-xs sm:p-6"
                 >
-                  <div>
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#023D24] text-sm font-extrabold text-[#FFD629]">
+                  <div className="w-full min-w-0">
+                    <div className="flex w-full flex-wrap items-center gap-2.5">
+                      <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#023D24] text-sm font-extrabold text-[#FFD629]">
                         0{index + 1}
                       </span>
                       {point.evidence && (
                         <EvidenceBadge type={point.evidence} research={research} />
                       )}
                     </div>
-                    <h4 className="ks-h3 mt-3.5 font-extrabold text-[#023D24]">{point.heading}</h4>
-                    <p className="ks-body mt-2.5 text-[#2C4A3B]">{point.text}</p>
+                    <h4 className="ks-h3 mt-3.5 w-full font-extrabold text-[#023D24]">
+                      {point.heading}
+                    </h4>
+                    <p className="ks-body mt-2.5 w-full text-[#2C4A3B]">{point.text}</p>
                   </div>
                   <SourcePills sourceIds={point.sourceIds} label={research.sourcesHeadingLabel} />
                 </article>
@@ -201,20 +203,20 @@ export function HistoryChronicle({ research, language }: HistoryChronicleProps) 
         className="ks-section ks-deferred-section bg-[#F8FAF4]"
       >
         <div className="ks-container">
-          <div className="grid items-start gap-7 lg:grid-cols-12 lg:gap-12">
+          <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-12 lg:gap-12">
             {/* Visual Column (Top on Mobile, Right on Desktop) */}
-            <div className="ks-reveal min-w-0 lg:order-2 lg:col-span-6">
+            <div className="ks-reveal w-full min-w-0 lg:order-2 lg:col-span-6">
               <SectionMediaCard registryKey="ancient-references" language={language} />
 
               {/* Colonial Historical Context Box */}
-              <div className="mt-5 rounded-2xl border border-[#D9A928]/60 bg-[#FFFBE8] p-5">
+              <div className="mt-5 w-full rounded-2xl border border-[#D9A928]/60 bg-[#FFFBE8] p-5">
                 <div className="flex items-start gap-3">
                   <BookMarked className="mt-0.5 h-5 w-5 shrink-0 text-[#8A6100]" aria-hidden="true" />
-                  <div>
-                    <h3 className="text-[1rem] font-extrabold text-[#5E4500] sm:text-[1.06rem]">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-[1.06rem] font-extrabold text-[#5E4500]">
                       {ancientReferences.colonialCritiqueTitle}
                     </h3>
-                    <p className="mt-2 text-[0.94rem] leading-relaxed text-[#5E4500]/95">
+                    <p className="mt-2 text-[0.95rem] leading-relaxed text-[#5E4500]/95">
                       {ancientReferences.colonialCritiqueBody}
                     </p>
                   </div>
@@ -223,33 +225,34 @@ export function HistoryChronicle({ research, language }: HistoryChronicleProps) 
             </div>
 
             {/* Editorial Content Column */}
-            <div className="min-w-0 lg:order-1 lg:col-span-6">
-              <p className="text-[0.82rem] font-extrabold uppercase tracking-[0.14em] text-[#138447] sm:text-sm">
+            <div className="w-full min-w-0 lg:order-1 lg:col-span-6">
+              <p className="text-[0.84rem] font-extrabold uppercase tracking-[0.14em] text-[#138447]">
                 {ancientReferences.sectionNumber} • {ancientReferences.eyebrow}
               </p>
               <h2
                 id="ancient-references-heading"
-                className="ks-h2 mt-2 font-extrabold text-[#023D24]"
+                className="ks-h2 mt-2 w-full font-extrabold text-[#023D24]"
               >
                 {ancientReferences.heading}
               </h2>
               <div className="ks-gold-rule mt-3.5" aria-hidden="true" />
-              <p className="mt-4 text-[1rem] font-semibold leading-relaxed text-[#355244] sm:text-[1.06rem]">
+              <p className="mt-4 w-full text-[1rem] font-semibold leading-relaxed text-[#355244] sm:text-[1.06rem]">
                 {ancientReferences.subtitle}
               </p>
-              <p className="ks-body mt-3 text-[#183527]">{ancientReferences.intro}</p>
+              <p className="ks-body mt-3 w-full text-[#183527]">{ancientReferences.intro}</p>
 
+              {/* Record Cards: Full-Width Heading + Badge on Separate Row Below */}
               <div className="mt-6 space-y-4">
                 {ancientReferences.records.map((rec, idx) => (
                   <article
                     key={idx}
-                    className="ks-reveal rounded-2xl border border-[#075B32]/14 bg-white p-5 shadow-xs sm:p-6"
+                    className="ks-reveal w-full rounded-2xl border border-[#075B32]/14 bg-white p-5 shadow-xs sm:p-6"
                   >
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <h3 className="ks-h3 font-extrabold text-[#023D24]">{rec.heading}</h3>
+                    <div className="flex w-full flex-col items-start gap-2.5">
+                      <h3 className="ks-h3 w-full font-extrabold text-[#023D24]">{rec.heading}</h3>
                       {rec.evidence && <EvidenceBadge type={rec.evidence} research={research} />}
                     </div>
-                    <p className="ks-body mt-2.5 text-[#2C4A3B]">{rec.text}</p>
+                    <p className="ks-body mt-3 w-full text-[#2C4A3B]">{rec.text}</p>
                     <SourcePills sourceIds={rec.sourceIds} label={research.sourcesHeadingLabel} />
                   </article>
                 ))}

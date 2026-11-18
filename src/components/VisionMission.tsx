@@ -24,7 +24,7 @@ export function VisionMission({ content }: VisionMissionProps) {
           <p className="ks-body mt-4 text-[#355244]">{content.visionMission.subtitle}</p>
         </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-12">
+        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-12">
           {/* Vision Card */}
           <article className="ks-reveal relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#D9A928]/45 bg-gradient-to-br from-[#023D24] via-[#064E2C] to-[#075B32] p-6 text-white shadow-[0_16px_40px_rgba(2,61,36,0.18)] sm:rounded-3xl sm:p-9 lg:col-span-5">
             <div>

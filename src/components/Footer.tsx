@@ -16,7 +16,7 @@ export function Footer({ content }: FooterProps) {
     <footer className="ks-deferred-section mt-auto border-t-4 border-[#D9A928] bg-[#023D24] text-white">
       {/* Extra bottom clearance guarantees floating WhatsApp & Back-to-Top buttons never overlap footer content */}
       <div className="ks-container pb-[calc(8.5rem+env(safe-area-inset-bottom,0px))] pt-12 sm:pb-24 lg:pt-16">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-12">
           {/* Column 1: Institutional Brand & Historical Statement */}
           <div className="lg:col-span-4">
             <div className="flex items-center gap-3.5">
