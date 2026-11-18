@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Replace example domain with your live production domain before deployment
+Sitemap: https://kurumbarsangam-tn.example/sitemap.xml

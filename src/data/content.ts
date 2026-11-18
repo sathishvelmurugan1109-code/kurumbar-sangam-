@@ -1,6 +1,7 @@
 import { OFFICIAL_ASSETS } from './gallery'
+import type { Language } from './types'
 
-export type Language = 'ta' | 'en'
+export type { Language }
 
 export const OFFICIAL_INFO = {
   phoneDisplay: '9750602103',
@@ -19,6 +20,13 @@ export interface NavItem {
   id: string
   href: string
   label: string
+}
+
+export interface NavGroup {
+  id: string
+  label: string
+  href?: string
+  items?: NavItem[]
 }
 
 export interface HighlightCard {
@@ -49,6 +57,13 @@ export interface SampleAnnouncement {
   note: string
 }
 
+export interface PosterHighlightItem {
+  id: string
+  src: string
+  label: string
+  alt: string
+}
+
 export interface SiteContent {
   meta: {
     title: string
@@ -60,13 +75,15 @@ export interface SiteContent {
     presidentDesignation: string
     presidentFullDesignation: string
   }
-  nav: NavItem[]
+  navGroups: NavGroup[]
   header: {
     contactCta: string
     openMenuLabel: string
     closeMenuLabel: string
     languageToggleLabel: string
     skipToContent: string
+    primaryNavLabel: string
+    mobileNavLabel: string
   }
   hero: {
     eyebrow: string
@@ -75,7 +92,8 @@ export interface SiteContent {
     motto: string
     subtitle: string
     leaderLabel: string
-    ctaAbout: string
+    ctaHistory: string
+    ctaRecords: string
     ctaContact: string
     ctaWhatsApp: string
     whatsappPrefill: string
@@ -83,8 +101,16 @@ export interface SiteContent {
     photoBadge1: string
     photoBadge2: string
     inspectPhotoHint: string
+    quickStrip: {
+      id: string
+      href: string
+      number: string
+      title: string
+      caption: string
+    }[]
   }
   about: {
+    sectionNumber: string
     eyebrow: string
     heading: string
     title: string
@@ -93,12 +119,14 @@ export interface SiteContent {
     highlights: HighlightCard[]
   }
   president: {
+    sectionNumber: string
     eyebrow: string
     heading: string
     roleLine: string
     orgLine: string
     summary: string
     officialBadge: string
+    portraitViewAriaLabel: string
     emblemTabLabel: string
     stageTabLabel: string
     callBtn: string
@@ -109,6 +137,7 @@ export interface SiteContent {
     contactLabel: string
   }
   visionMission: {
+    sectionNumber: string
     eyebrow: string
     heading: string
     subtitle: string
@@ -118,6 +147,7 @@ export interface SiteContent {
     missionPoints: string[]
   }
   events: {
+    sectionNumber: string
     eyebrow: string
     heading: string
     subtitle: string
@@ -125,9 +155,11 @@ export interface SiteContent {
     items: EventCardItem[]
   }
   gallery: {
+    sectionNumber: string
     eyebrow: string
     heading: string
     subtitle: string
+    filterAriaLabel: string
     filters: {
       all: string
       events: string
@@ -141,6 +173,7 @@ export interface SiteContent {
     swipeHint: string
   }
   announcements: {
+    sectionNumber: string
     eyebrow: string
     heading: string
     subtitle: string
@@ -152,9 +185,11 @@ export interface SiteContent {
     whatsappUpdatesCta: string
     whatsappUpdatesPrefill: string
     postersHighlightTitle: string
+    posters: PosterHighlightItem[]
     items: SampleAnnouncement[]
   }
   contact: {
+    sectionNumber: string
     eyebrow: string
     heading: string
     subtitle: string
@@ -167,6 +202,7 @@ export interface SiteContent {
     formTitle: string
     formSubtitle: string
     frontendNotice: string
+    errorPrefixLabel: string
     fields: {
       nameLabel: string
       namePlaceholder: string
@@ -195,13 +231,17 @@ export interface SiteContent {
   }
   footer: {
     description: string
-    quickLinksTitle: string
+    historyColumnTitle: string
+    developmentColumnTitle: string
     officialContactTitle: string
     presidentLabel: string
     contactLabel: string
     whatsappCta: string
     copyright: string
     backToTop: string
+    researchDisclaimer: string
+    historyLinks: NavItem[]
+    developmentLinks: NavItem[]
   }
   whatsappWidget: {
     buttonLabel: string
@@ -222,7 +262,7 @@ export interface SiteContent {
 export const SITE_CONTENT: Record<Language, SiteContent> = {
   ta: {
     meta: {
-      title: 'குறும்பர் சங்கம் – தமிழ்நாடு | Kurumbar Sangam Tamil Nadu',
+      title: 'குறும்பர் சங்கம் – தமிழ்நாடு | வரலாறு, பண்பாடு & அதிகாரப்பூர்வ தளம்',
       orgName: 'குறும்பர் சங்கம் – தமிழ்நாடு',
       orgShort: 'குறும்பர் சங்கம்',
       stateName: 'தமிழ்நாடு',
@@ -231,14 +271,64 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       presidentDesignation: 'மாநில தலைவர், குறும்பர் சங்கம்',
       presidentFullDesignation: 'மாநில தலைவர், குறும்பர் சங்கம் – தமிழ்நாடு',
     },
-    nav: [
+    navGroups: [
       { id: 'home', href: '#home', label: 'முகப்பு' },
-      { id: 'about', href: '#about', label: 'எங்களைப் பற்றி' },
-      { id: 'president', href: '#president', label: 'தலைவர்' },
-      { id: 'vision', href: '#vision', label: 'நோக்கம்' },
-      { id: 'events', href: '#events', label: 'நிகழ்வுகள்' },
-      { id: 'gallery', href: '#gallery', label: 'புகைப்படங்கள்' },
-      { id: 'announcements', href: '#announcements', label: 'அறிவிப்புகள்' },
+      {
+        id: 'sangam',
+        label: 'சங்கம்',
+        items: [
+          { id: 'about', href: '#about', label: '02. குறும்பர் சங்கம் பற்றி' },
+          { id: 'vision-mission', href: '#vision-mission', label: '26. தொலைநோக்கு & செயல்நோக்கம்' },
+          { id: 'president', href: '#president', label: '27. மாநில தலைவர் அறிமுகம்' },
+        ],
+      },
+      {
+        id: 'history-group',
+        label: 'வரலாறு & பண்பாடு',
+        items: [
+          { id: 'history', href: '#history', label: '03. முழு குறும்பர் வரலாறு' },
+          { id: 'ancient-references', href: '#ancient-references', label: '04. பண்டைய வரலாற்றுக் குறிப்புகள்' },
+          { id: 'lifestyle', href: '#lifestyle', label: '05. மரபுவழி வாழ்வியல்' },
+          { id: 'occupations', href: '#occupations', label: '06. மரபுவழித் தொழில்கள்' },
+          { id: 'culture-heritage', href: '#culture-heritage', label: '07. பண்பாடு மற்றும் மரபுகள்' },
+          { id: 'language-literature', href: '#language-literature', label: '08. மொழி & இலக்கியம்' },
+          { id: 'traditional-food', href: '#traditional-food', label: '09. மரபுவழி உணவு' },
+          { id: 'traditional-clothing', href: '#traditional-clothing', label: '10. மரபுவழி ஆடைகள்' },
+          { id: 'festivals', href: '#festivals', label: '11. திருவிழாக்கள்' },
+          { id: 'arts-practices', href: '#arts-practices', label: '12. கலை & நாட்டுப்புற மரபுகள்' },
+          { id: 'geographical-distribution', href: '#geographical-distribution', label: '13. வரலாற்றுப் புவியியல் பரவல்' },
+        ],
+      },
+      {
+        id: 'records-group',
+        label: 'அரசு ஆவணங்கள்',
+        items: [
+          { id: 'education-development', href: '#education-development', label: '14. கல்வி & சமூக வளர்ச்சி' },
+          { id: 'government-records', href: '#government-records', label: '15. அரசுப் பதிவுகள் & வகைப்பாடு' },
+          { id: 'documents-research', href: '#documents-research', label: '16. வரலாற்று ஆவணங்கள் & ஆய்வுகள்' },
+        ],
+      },
+      {
+        id: 'social-group',
+        label: 'சமூக மேம்பாடு',
+        items: [
+          { id: 'achievements', href: '#achievements', label: '17. சமூகச் சாதனைகள்' },
+          { id: 'current-activities', href: '#current-activities', label: '18. தற்போதைய சமூகச் செயல்பாடுகள்' },
+          { id: 'youth-development', href: '#youth-development', label: '19. இளைஞர் வளர்ச்சி' },
+          { id: 'womens-development', href: '#womens-development', label: '20. மகளிர் வளர்ச்சி' },
+          { id: 'educational-development', href: '#educational-development', label: '21. கல்வி வளர்ச்சித் திட்டங்கள்' },
+          { id: 'community-welfare', href: '#community-welfare', label: '22. சமூக நல நடவடிக்கைகள்' },
+        ],
+      },
+      {
+        id: 'media-group',
+        label: 'நிகழ்வுகள் & ஊடகம்',
+        items: [
+          { id: 'events', href: '#events', label: '23. நிகழ்வுகள் & மாநாடுகள்' },
+          { id: 'gallery', href: '#gallery', label: '24. புகைப்படத் தொகுப்பு' },
+          { id: 'announcements', href: '#announcements', label: '25. செய்திகள் & அறிவிப்புகள்' },
+        ],
+      },
       { id: 'contact', href: '#contact', label: 'தொடர்புக்கு' },
     ],
     header: {
@@ -247,58 +337,94 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       closeMenuLabel: 'பட்டியல் மூட',
       languageToggleLabel: 'மொழியை மாற்றவும்',
       skipToContent: 'முதன்மை உள்ளடக்கத்திற்குச் செல்லவும்',
+      primaryNavLabel: 'முதன்மை வழிசெலுத்தல்',
+      mobileNavLabel: 'கைபேசி வழிசெலுத்தல்',
     },
     hero: {
-      eyebrow: 'அதிகாரப்பூர்வ தகவல் தளம் • தமிழ்நாடு',
+      eyebrow: 'அதிகாரப்பூர்வ சமூக வரலாற்று & தகவல் தளம் • தமிழ்நாடு',
       headingLine1: 'குறும்பர் சங்கம்',
       headingLine2: 'தமிழ்நாடு',
       motto: 'ஒற்றுமை • உரிமை • முன்னேற்றம்',
-      subtitle: 'நமது சமூகத்தின் ஒற்றுமை, வளர்ச்சி மற்றும் நலனுக்காக ஒன்றிணைவோம்.',
+      subtitle:
+        'ஆதாரபூர்வ வரலாற்று ஆவணப்படுத்தல், பண்பாட்டுப் பாதுகாப்பு, கல்வி விழிப்புணர்வு மற்றும் சமூக ஒற்றுமைக்காக ஒன்றிணையும் அதிகாரப்பூர்வத் தளம்.',
       leaderLabel: 'மாநில தலைமை',
-      ctaAbout: 'எங்களைப் பற்றி அறிய',
+      ctaHistory: 'முழு வரலாற்றை அறிய',
+      ctaRecords: 'அரசு ஆவணங்கள் & வகைப்பாடு',
       ctaContact: 'தொடர்பு கொள்ள',
-      ctaWhatsApp: 'WhatsApp மூலம் தொடர்பு கொள்ள',
+      ctaWhatsApp: 'WhatsApp தொடர்பு',
       whatsappPrefill:
         'வணக்கம் ஐயா, குறும்பர் சங்கம் – தமிழ்நாடு இணையதளம் வழியாகத் தொடர்பு கொள்கிறேன்.',
       emblemCaption: 'பாரம்பரியம் | பண்பாடு | முன்னேற்றம்',
       photoBadge1: 'மாநில பொதுக்கூட்டம்',
       photoBadge2: 'தலைவர் சிறப்புரை',
       inspectPhotoHint: 'படத்தை முழுமையாகப் பார்க்க கிளிக் செய்க',
+      quickStrip: [
+        {
+          id: 'q-history',
+          href: '#history',
+          number: '03–04',
+          title: 'ஆதாரபூர்வ வரலாறு',
+          caption: 'சமூக அடையாள வேறுபாடுகள் & பண்டைய குறிப்புகள்',
+        },
+        {
+          id: 'q-heritage',
+          href: '#lifestyle',
+          number: '05–12',
+          title: 'பண்பாடு & மரபுகள்',
+          caption: 'வாழ்வியல், தொழில்கள், மொழி, உணவு, கலை & விழாக்கள்',
+        },
+        {
+          id: 'q-records',
+          href: '#government-records',
+          number: '15–16',
+          title: 'அரசுப் பதிவுகள் & ஆய்வுகள்',
+          caption: 'ST / PVTG / MBC ஆவணங்கள் & 14 ஆதார நூல்கள்',
+        },
+        {
+          id: 'q-social',
+          href: '#current-activities',
+          number: '17–25',
+          title: 'சமூக வளர்ச்சி & நிகழ்வுகள்',
+          caption: 'இளைஞர், மகளிர், கல்வி, நலன் & புகைப்படத் தொகுப்பு',
+        },
+      ],
     },
     about: {
+      sectionNumber: '02',
       eyebrow: 'எங்கள் அமைப்பு',
-      heading: 'எங்களைப் பற்றி',
+      heading: 'குறும்பர் சங்கம் பற்றி',
       title: 'குறும்பர் சங்கம் – தமிழ்நாடு',
       paragraphs: [
-        'குறும்பர் சங்கம் – தமிழ்நாடு என்பது சமூக ஒற்றுமை, பரஸ்பர ஒத்துழைப்பு மற்றும் கூட்டு முன்னேற்றத்தை மையமாகக் கொண்டு செயல்படும் ஒரு சமூக அமைப்பாகும். தமிழ்நாடு முழுவதும் உள்ள சமூக உறுப்பினர்களை ஒருங்கிணைத்து, சமூக நலன் மற்றும் முன்னேற்றத்திற்கான ஆக்கப்பூர்வமான பாதையை உருவாக்குவதே எங்களின் முதன்மை நோக்கமாகும்.',
-        'கல்வி விழிப்புணர்வு, இளைஞர்களின் திறன் வளர்ச்சி, சமூக நிகழ்வுகளில் உறுப்பினர்களின் பங்கேற்பு மற்றும் நமது பாரம்பரிய பண்பாட்டு அடையாளத்தைப் பாதுகாத்தல் ஆகியவற்றில் சங்கம் தொடர்ந்து கவனம் செலுத்தி வருகிறது. சம மரியாதை, ஒற்றுமை மற்றும் சமூக மேம்பாடு ஆகிய விழுமியங்களுடன் அனைவரையும் இணைத்துச் செயல்படுகிறோம்.',
+        'குறும்பர் சங்கம் – தமிழ்நாடு என்பது சமூக ஒற்றுமை, பரஸ்பர ஒத்துழைப்பு மற்றும் கூட்டு முன்னேற்றத்தை மையமாகக் கொண்டு செயல்படும் ஒரு சமூக அமைப்பாகும். தமிழ்நாடு முழுவதும் உள்ள சமூக உறுப்பினர்களை ஒருங்கிணைத்து, சமூக நலன், கல்வி வளர்ச்சி மற்றும் வரலாற்று விழிப்புணர்வுக்கான ஆக்கப்பூர்வமான பாதையை உருவாக்குவதே எங்களின் முதன்மை நோக்கமாகும்.',
+        'கல்வி விழிப்புணர்வு, இளைஞர்களின் திறன் வளர்ச்சி, பெண்கள் முன்னேற்றம், ஆதாரபூர்வ வரலாற்று ஆவணப்படுத்தல் மற்றும் நமது பாரம்பரிய பண்பாட்டு அடையாளத்தைப் பாதுகாத்தல் ஆகியவற்றில் சங்கம் தொடர்ந்து கவனம் செலுத்தி வருகிறது.',
       ],
       photoCaption: 'சங்க நிர்வாகிகள் மற்றும் உறுப்பினர்கள் பங்கேற்ற ஆலோசனைக் கூட்டம்',
       highlights: [
         {
           id: 'unity',
-          title: 'ஒற்றுமை',
+          title: 'சமூக ஒற்றுமை',
           description:
-            'தமிழ்நாடு முழுவதும் உள்ள சமூக உறுப்பினர்களை ஒரே குடையின் கீழ் இணைத்து வலுவான சமூக ஒற்றுமையை உருவாக்குதல்.',
+            'தமிழ்நாடு முழுவதும் உள்ள சமூக உறுப்பினர்களை ஒரே குடையின் கீழ் இணைத்து வலுவான ஒற்றுமையையும் சம மரியாதையையும் உருவாக்குதல்.',
           icon: 'unity',
         },
         {
           id: 'welfare',
-          title: 'சமூக நலன்',
+          title: 'சமூக நலன் & உரிமை விழிப்புணர்வு',
           description:
-            'சமூக நல நடவடிக்கைகள், உறுப்பினர் பங்கேற்பு மற்றும் சம மரியாதையுடன் கூடிய சமூக மேம்பாட்டை ஊக்குவித்தல்.',
+            'அரசியலமைப்பு உரிமைகள், அரசு நலத்திட்டங்கள் மற்றும் சட்டபூர்வ ஆவண நடைமுறைகள் குறித்த துல்லியமான விழிப்புணர்வைப் பரப்புதல்.',
           icon: 'welfare',
         },
         {
           id: 'education',
-          title: 'கல்வி மற்றும் முன்னேற்றம்',
+          title: 'கல்வி & வரலாற்று ஆவணப்படுத்தல்',
           description:
-            'கல்வி விழிப்புணர்வு, இளைஞர் திறன் வளர்ச்சி மற்றும் பாரம்பரிய பண்பாட்டுடன் இணைந்த எதிர்கால முன்னேற்றத்திற்கு வழிகாட்டுதல்.',
+            'கல்வி வழிகாட்டுதல், இளைஞர் திறன் வளர்ச்சி மற்றும் நம்பகமான வரலாற்று–பண்பாட்டுப் பதிவுகளைப் பாதுகாத்தல்.',
           icon: 'education',
         },
       ],
     },
     president: {
+      sectionNumber: '27',
       eyebrow: 'மாநில தலைமை',
       heading: 'மாநில தலைவர் அறிமுகம்',
       roleLine: 'மாநில தலைவர்',
@@ -306,6 +432,7 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       summary:
         'சமூக ஒற்றுமை, சம உரிமை, கல்வி விழிப்புணர்வு மற்றும் இளைஞர் முன்னேற்றத்திற்காக தமிழ்நாடு முழுவதும் உள்ள குறும்பர் சங்க உறுப்பினர்களை ஒருங்கிணைத்து வழிநடத்தும் மாநில தலைவர்.',
       officialBadge: 'அதிகாரப்பூர்வ மாநில தலைமை',
+      portraitViewAriaLabel: 'தலைவர் தோற்றத் தேர்வு',
       emblemTabLabel: 'தலைவர் இலச்சினை',
       stageTabLabel: 'மேடை உரை',
       callBtn: 'அழைக்க: 9750602103',
@@ -317,6 +444,7 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       contactLabel: 'அதிகாரப்பூர்வ தொடர்பு எண்',
     },
     visionMission: {
+      sectionNumber: '26',
       eyebrow: 'எங்கள் வழிகாட்டி',
       heading: 'தொலைநோக்கு மற்றும் செயல்நோக்கம்',
       subtitle: 'ஒற்றுமை, கல்வி மற்றும் சம உரிமையுடன் கூடிய வளமான எதிர்காலத்தை நோக்கி',
@@ -329,12 +457,13 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
         'கல்வி விழிப்புணர்வை உருவாக்குதல்.',
         'இளைஞர்களின் திறன் வளர்ச்சியை ஊக்குவித்தல்.',
         'சமூக நல நடவடிக்கைகளில் பங்கேற்பு.',
-        'கலாச்சார மற்றும் பாரம்பரிய விழிப்புணர்வு.',
+        'கலாச்சார, மொழி மற்றும் பாரம்பரிய விழிப்புணர்வைப் பாதுகாத்தல்.',
       ],
     },
     events: {
+      sectionNumber: '23',
       eyebrow: 'சங்க செயல்பாடுகள்',
-      heading: 'எங்கள் நிகழ்வுகள்',
+      heading: 'நிகழ்வுகள் மற்றும் மாநாடுகள்',
       subtitle:
         'சமூக ஒற்றுமை, ஆலோசனை மற்றும் விழிப்புணர்வை வலுப்படுத்தும் குறும்பர் சங்கத்தின் முக்கிய நிகழ்வுகள் மற்றும் சந்திப்புகள்.',
       viewImageLabel: 'படத்தைக் காண்க',
@@ -356,7 +485,7 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
           image: OFFICIAL_ASSETS.stateLevelConference,
           displayMode: 'cover',
           objectPosition: 'object-[50%_15%]',
-          categoryTag: 'மாநில நிகழ்வு',
+          categoryTag: 'மாநில மாநாடு',
           title: 'மாநில அளவிலான கூட்டங்கள்',
           description:
             'தமிழ்நாடு முழுவதும் உள்ள நிர்வாகிகள் மற்றும் பிரதிநிதிகள் பங்கேற்று சமூகக் கோரிக்கைகள் மற்றும் வளர்ச்சித் திட்டங்களை விவாதிக்கும் மாநில அளவிலான கூட்டங்கள்.',
@@ -397,10 +526,12 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       ],
     },
     gallery: {
+      sectionNumber: '24',
       eyebrow: 'நிகழ்வு ஆவணங்கள்',
       heading: 'புகைப்படத் தொகுப்பு',
       subtitle:
-        'குறும்பர் சங்கத்தின் பொதுக்கூட்டங்கள், தலைவர் உரைகள் மற்றும் அதிகாரப்பூர்வ விழிப்புணர்வு போஸ்டர்கள். எந்தப் படத்தையும் கிளிக் செய்து முழுத் திரையில் காணலாம்.',
+        'குறும்பர் சங்கத்தின் உண்மையான பொதுக்கூட்டங்கள், தலைவர் உரைகள் மற்றும் அதிகாரப்பூர்வ விழிப்புணர்வு போஸ்டர்கள். எந்தப் படத்தையும் கிளிக் செய்து முழுத் திரையில் காணலாம்.',
+      filterAriaLabel: 'புகைப்படப் பிரிவு வடிகட்டி',
       filters: {
         all: 'அனைத்தும்',
         events: 'நிகழ்வுகள்',
@@ -414,13 +545,13 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       swipeHint: 'விசைப்பலகை அம்புக்குறிகள் அல்லது ஸ்வைப் மூலம் மாற்றலாம்',
     },
     announcements: {
+      sectionNumber: '25',
       eyebrow: 'தகவல் பலகை',
-      heading: 'அறிவிப்புகள் மற்றும் செய்திகள்',
-      subtitle:
-        'சங்க அறிவிப்புகள் மற்றும் விழிப்புணர்வு தகவல்களைப் பகிர்வதற்கான பிரிவு.',
+      heading: 'செய்திகள் மற்றும் அறிவிப்புகள்',
+      subtitle: 'சங்க அறிவிப்புகள், விழிப்புணர்வு போஸ்டர்கள் மற்றும் அதிகாரப்பூர்வத் தகவல்களைப் பகிர்வதற்கான பிரிவு.',
       demoBannerTitle: 'மாதிரி உள்ளடக்க அறிவிப்பு (Demonstration Content)',
       demoBannerText:
-        'கீழே உள்ள அறிவிப்பு அட்டைகள் இணையதள வடிவமைப்பு காட்சிக்காக உருவாக்கப்பட்ட மாதிரிகள் மட்டுமே. அதிகாரப்பூர்வ அறிவிப்புகள் மற்றும் நேரடித் தகவல்களுக்கு மாநில தலைமையின் WhatsApp அல்லது தொடர்பு எண்ணை அணுகவும்.',
+        'கீழே உள்ள மூன்று அறிவிப்பு அட்டைகள் இணையதள வடிவமைப்பு காட்சிக்காக உருவாக்கப்பட்ட மாதிரிகள் மட்டுமே. அதிகாரப்பூர்வ அறிவிப்புகள் மற்றும் நேரடித் தகவல்களுக்கு மாநில தலைமையின் WhatsApp அல்லது தொடர்பு எண்ணை அணுகவும்.',
       demoBadge: 'மாதிரி அறிவிப்பு',
       readMoreLabel: 'மேலும் படிக்க',
       closeModalLabel: 'மூடுக',
@@ -428,6 +559,26 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       whatsappUpdatesPrefill:
         'வணக்கம், குறும்பர் சங்கம் – தமிழ்நாடு அதிகாரப்பூர்வ அறிவிப்புகள் மற்றும் நிகழ்வுத் தகவல்களை அறிய விரும்புகிறேன்.',
       postersHighlightTitle: 'அதிகாரப்பூர்வ விழிப்புணர்வு போஸ்டர்கள்',
+      posters: [
+        {
+          id: 'awareness-poster-unity',
+          src: OFFICIAL_ASSETS.awarenessPosterUnity,
+          label: 'ஒற்றுமையே பலம்',
+          alt: 'குறும்பர் சங்கம் ஒற்றுமையே பலம் அதிகாரப்பூர்வ விழிப்புணர்வு போஸ்டர்',
+        },
+        {
+          id: 'promotional-poster-green-gold',
+          src: OFFICIAL_ASSETS.promotionalPosterGreenGold,
+          label: 'ஒன்றுபடுவோம் | உயர்வோம் | மாற்றுவோம்',
+          alt: 'குறும்பர் சங்கம் ஒன்றுபடுவோம் உயர்வோம் மாற்றுவோம் அதிகாரப்பூர்வ போஸ்டர்',
+        },
+        {
+          id: 'awareness-poster-equality',
+          src: OFFICIAL_ASSETS.awarenessPosterEquality,
+          label: 'சமத்துவ விழிப்புணர்வு',
+          alt: 'குறும்பர் சங்கம் சமத்துவ விழிப்புணர்வு அதிகாரப்பூர்வ போஸ்டர்',
+        },
+      ],
       items: [
         {
           id: 'sample-1',
@@ -462,10 +613,11 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       ],
     },
     contact: {
+      sectionNumber: '28',
       eyebrow: 'நேரடித் தொடர்பு',
-      heading: 'தொடர்பு கொள்ள',
+      heading: 'தொடர்பு கொள்ள மற்றும் WhatsApp',
       subtitle:
-        'குறும்பர் சங்கம் – தமிழ்நாடு தொடர்பான தகவல்கள், உறுப்பினர் இணைப்பு மற்றும் ஆலோசனைகளுக்கு நேரடியாக அழைக்கவும் அல்லது WhatsApp மூலம் செய்தி அனுப்பவும்.',
+        'குறும்பர் சங்கம் – தமிழ்நாடு தொடர்பான தகவல்கள், வரலாற்று ஆவணப் பகிர்வு மற்றும் ஆலோசனைகளுக்கு நேரடியாக அழைக்கவும் அல்லது WhatsApp மூலம் செய்தி அனுப்பவும்.',
       officialCardTitle: 'அதிகாரப்பூர்வ தொடர்பு விவரம்',
       mobileLabel: 'கைபேசி எண்',
       callBtn: 'இப்போதே அழைக்க',
@@ -477,6 +629,7 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
         'கீழே உள்ள விவரங்களைப் பூர்த்தி செய்து ஒரே கிளிக்கில் WhatsApp வழியாக அதிகாரப்பூர்வ எண்ணிற்குச் செய்தி அனுப்பலாம்.',
       frontendNotice:
         'குறிப்பு: இது Frontend-only இணையதளம் என்பதால் இந்தப் படிவம் எந்த சர்வரிலும் சேமிக்கப்படுவதில்லை. உங்கள் செய்தியை உடனடியாக WhatsApp வழியாக 9750602103 என்ற எண்ணிற்கு அனுப்பலாம்.',
+      errorPrefixLabel: 'பிழை',
       fields: {
         nameLabel: 'உங்கள் பெயர்',
         namePlaceholder: 'உங்கள் முழுப் பெயரை உள்ளிடவும்',
@@ -487,7 +640,7 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
         mobileHint: '10 இலக்க இந்திய கைபேசி எண்',
         mobileError: 'தயவுசெய்து சரியான 10 இலக்க கைபேசி எண்ணை உள்ளிடவும்.',
         subjectLabel: 'பொருள்',
-        subjectPlaceholder: 'எ.கா: உறுப்பினர் இணைப்பு / சங்கத் தகவல்',
+        subjectPlaceholder: 'எ.கா: உறுப்பினர் இணைப்பு / வரலாற்று ஆவணப் பகிர்வு',
         subjectHint: 'உங்கள் செய்தியின் தலைப்பைச் சுருக்கமாக எழுதவும்',
         subjectError: 'தயவுசெய்து செய்தியின் பொருளை உள்ளிடவும்.',
         messageLabel: 'உங்கள் செய்தி',
@@ -507,14 +660,37 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
     },
     footer: {
       description:
-        'சமூக ஒற்றுமை, சம உரிமை, கல்வி விழிப்புணர்வு மற்றும் முன்னேற்றத்திற்காக ஒன்றிணைந்து செயல்படும் குறும்பர் சங்கம் – தமிழ்நாடு.',
-      quickLinksTitle: 'விரைவு இணைப்புகள்',
+        'சமூக ஒற்றுமை, ஆதாரபூர்வ வரலாற்று ஆவணப்படுத்தல், கல்வி விழிப்புணர்வு மற்றும் சம உரிமைக்காகச் செயல்படும் குறும்பர் சங்கம் – தமிழ்நாடு.',
+      historyColumnTitle: 'வரலாறு & ஆவணங்கள்',
+      developmentColumnTitle: 'வளர்ச்சி & ஊடகம்',
       officialContactTitle: 'அதிகாரப்பூர்வ தொடர்பு',
       presidentLabel: 'மாநில தலைவர்:',
       contactLabel: 'தொடர்பு எண்:',
       whatsappCta: 'WhatsApp-இல் இணைக',
       copyright: '© 2026 குறும்பர் சங்கம் – தமிழ்நாடு. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.',
       backToTop: 'மேலே செல்ல',
+      researchDisclaimer:
+        'வரலாற்றுப் பிரிவுகள் கல்விசார் மற்றும் அரசு ஆதாரங்களின் அடிப்படையில் தொகுக்கப்பட்டு ஆதார இணைப்புகளுடன் வழங்கப்பட்டுள்ளன.',
+      historyLinks: [
+        { id: 'f-about', href: '#about', label: 'சங்கம் பற்றி' },
+        { id: 'f-history', href: '#history', label: 'முழு குறும்பர் வரலாறு' },
+        { id: 'f-ancient', href: '#ancient-references', label: 'பண்டைய குறிப்புகள்' },
+        { id: 'f-lifestyle', href: '#lifestyle', label: 'வாழ்வியல் & தொழில்கள்' },
+        { id: 'f-culture', href: '#culture-heritage', label: 'பண்பாடு, மொழி & கலை' },
+        { id: 'f-geo', href: '#geographical-distribution', label: 'புவியியல் பரவல்' },
+        { id: 'f-gov', href: '#government-records', label: 'அரசுப் பதிவுகள் & வகைப்பாடு' },
+        { id: 'f-docs', href: '#documents-research', label: 'ஆய்வு ஆதார நூலகம்' },
+      ],
+      developmentLinks: [
+        { id: 'f-ach', href: '#achievements', label: 'சமூகச் சாதனைகள்' },
+        { id: 'f-act', href: '#current-activities', label: 'தற்போதைய செயல்பாடுகள்' },
+        { id: 'f-youth', href: '#youth-development', label: 'இளைஞர் & மகளிர் வளர்ச்சி' },
+        { id: 'f-edu', href: '#educational-development', label: 'கல்வி & சமூக நலன்' },
+        { id: 'f-events', href: '#events', label: 'நிகழ்வுகள் & மாநாடுகள்' },
+        { id: 'f-gallery', href: '#gallery', label: 'புகைப்படத் தொகுப்பு' },
+        { id: 'f-news', href: '#announcements', label: 'செய்திகள் & அறிவிப்புகள்' },
+        { id: 'f-pres', href: '#president', label: 'மாநில தலைவர் அறிமுகம்' },
+      ],
     },
     whatsappWidget: {
       buttonLabel: 'WhatsApp தொடர்பு',
@@ -534,9 +710,9 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
             'வணக்கம் ஐயா, குறும்பர் சங்கத்தின் வரவிருக்கும் கூட்டங்கள் மற்றும் நிகழ்வுகள் குறித்து அறிய விரும்புகிறேன்.',
         },
         {
-          label: 'நேரடித் தொடர்பு / ஆலோசனை',
+          label: 'வரலாற்று ஆவணப் பகிர்வு',
           message:
-            'வணக்கம் K. P. ராஜசிம்ம ஹெக்டே ஐயா, குறும்பர் சங்கம் – தமிழ்நாடு தொடர்பாகப் பேச விரும்புகிறேன்.',
+            'வணக்கம் ஐயா, குறும்பர் வரலாற்று ஆவணப்படுத்தல் தொடர்பாகத் தகவல்களைப் பகிர விரும்புகிறேன்.',
         },
       ],
       openDirectBtn: 'WhatsApp உரையாடலைத் தொடங்கவும்',
@@ -547,7 +723,7 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
   },
   en: {
     meta: {
-      title: 'Kurumbar Sangam – Tamil Nadu | குறும்பர் சங்கம் – தமிழ்நாடு',
+      title: 'Kurumbar Sangam – Tamil Nadu | History, Heritage & Official Portal',
       orgName: 'Kurumbar Sangam – Tamil Nadu',
       orgShort: 'Kurumbar Sangam',
       stateName: 'Tamil Nadu',
@@ -556,14 +732,64 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       presidentDesignation: 'State President, Kurumbar Sangam',
       presidentFullDesignation: 'State President, Kurumbar Sangam – Tamil Nadu',
     },
-    nav: [
+    navGroups: [
       { id: 'home', href: '#home', label: 'Home' },
-      { id: 'about', href: '#about', label: 'About Us' },
-      { id: 'president', href: '#president', label: 'President' },
-      { id: 'vision', href: '#vision', label: 'Vision' },
-      { id: 'events', href: '#events', label: 'Events' },
-      { id: 'gallery', href: '#gallery', label: 'Gallery' },
-      { id: 'announcements', href: '#announcements', label: 'Updates' },
+      {
+        id: 'sangam',
+        label: 'Sangam',
+        items: [
+          { id: 'about', href: '#about', label: '02. About Kurumbar Sangam' },
+          { id: 'vision-mission', href: '#vision-mission', label: '26. Vision & Mission' },
+          { id: 'president', href: '#president', label: '27. State President Profile' },
+        ],
+      },
+      {
+        id: 'history-group',
+        label: 'History & Heritage',
+        items: [
+          { id: 'history', href: '#history', label: '03. Complete Kurumbar History' },
+          { id: 'ancient-references', href: '#ancient-references', label: '04. Ancient Historical References' },
+          { id: 'lifestyle', href: '#lifestyle', label: '05. Traditional Lifestyle' },
+          { id: 'occupations', href: '#occupations', label: '06. Traditional Occupations' },
+          { id: 'culture-heritage', href: '#culture-heritage', label: '07. Culture & Heritage' },
+          { id: 'language-literature', href: '#language-literature', label: '08. Language & Literature' },
+          { id: 'traditional-food', href: '#traditional-food', label: '09. Traditional Food' },
+          { id: 'traditional-clothing', href: '#traditional-clothing', label: '10. Traditional Clothing' },
+          { id: 'festivals', href: '#festivals', label: '11. Festivals & Celebrations' },
+          { id: 'arts-practices', href: '#arts-practices', label: '12. Arts & Cultural Practices' },
+          { id: 'geographical-distribution', href: '#geographical-distribution', label: '13. Geographical Distribution' },
+        ],
+      },
+      {
+        id: 'records-group',
+        label: 'Records & Research',
+        items: [
+          { id: 'education-development', href: '#education-development', label: '14. Education & Social Development' },
+          { id: 'government-records', href: '#government-records', label: '15. Government Records & Classification' },
+          { id: 'documents-research', href: '#documents-research', label: '16. Historical Documents & Research' },
+        ],
+      },
+      {
+        id: 'social-group',
+        label: 'Community Progress',
+        items: [
+          { id: 'achievements', href: '#achievements', label: '17. Community Achievements' },
+          { id: 'current-activities', href: '#current-activities', label: '18. Current Social Activities' },
+          { id: 'youth-development', href: '#youth-development', label: '19. Youth Development' },
+          { id: 'womens-development', href: '#womens-development', label: '20. Women’s Development' },
+          { id: 'educational-development', href: '#educational-development', label: '21. Educational Development' },
+          { id: 'community-welfare', href: '#community-welfare', label: '22. Community Welfare' },
+        ],
+      },
+      {
+        id: 'media-group',
+        label: 'Events & Media',
+        items: [
+          { id: 'events', href: '#events', label: '23. Events & Conferences' },
+          { id: 'gallery', href: '#gallery', label: '24. Photo Gallery' },
+          { id: 'announcements', href: '#announcements', label: '25. News & Announcements' },
+        ],
+      },
       { id: 'contact', href: '#contact', label: 'Contact' },
     ],
     header: {
@@ -572,16 +798,19 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       closeMenuLabel: 'Close navigation menu',
       languageToggleLabel: 'Switch language',
       skipToContent: 'Skip to main content',
+      primaryNavLabel: 'Primary Navigation',
+      mobileNavLabel: 'Mobile Navigation',
     },
     hero: {
-      eyebrow: 'Official Information Portal • Tamil Nadu',
+      eyebrow: 'Official Community History & Information Portal • Tamil Nadu',
       headingLine1: 'Kurumbar Sangam',
       headingLine2: 'Tamil Nadu',
       motto: 'Unity • Rights • Progress',
       subtitle:
-        'Uniting for the solidarity, growth, welfare, and dignified advancement of our community.',
+        'An evidence-based bilingual portal documenting verified community history, cultural heritage, statutory classifications, educational progress, and solidarity across Tamil Nadu.',
       leaderLabel: 'State Leadership',
-      ctaAbout: 'About the Sangam',
+      ctaHistory: 'Explore Complete History',
+      ctaRecords: 'Government Records & Status',
       ctaContact: 'Contact Us',
       ctaWhatsApp: 'Connect on WhatsApp',
       whatsappPrefill:
@@ -590,14 +819,45 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       photoBadge1: 'State Public Meeting',
       photoBadge2: 'Leadership Address',
       inspectPhotoHint: 'Click any photo to view full size',
+      quickStrip: [
+        {
+          id: 'q-history',
+          href: '#history',
+          number: '03–04',
+          title: 'Verified History',
+          caption: 'Identity distinctions, ancient context & colonial critique',
+        },
+        {
+          id: 'q-heritage',
+          href: '#lifestyle',
+          number: '05–12',
+          title: 'Culture & Heritage',
+          caption: 'Lifestyle, occupations, language, food, clothing & arts',
+        },
+        {
+          id: 'q-records',
+          href: '#government-records',
+          number: '15–16',
+          title: 'Government Records',
+          caption: 'ST / PVTG / MBC classifications & 14 verified sources',
+        },
+        {
+          id: 'q-social',
+          href: '#current-activities',
+          number: '17–25',
+          title: 'Development & Media',
+          caption: 'Youth, women, education, welfare, events & gallery',
+        },
+      ],
     },
     about: {
+      sectionNumber: '02',
       eyebrow: 'Our Organization',
-      heading: 'About Us',
+      heading: 'About Kurumbar Sangam',
       title: 'Kurumbar Sangam – Tamil Nadu',
       paragraphs: [
-        'Kurumbar Sangam – Tamil Nadu is a community organization dedicated to fostering unity, social welfare, and collective advancement. Bringing together community members across Tamil Nadu, the association works constructively toward shared growth and mutual support.',
-        'Our focus spans education awareness, youth skill development, active community participation, and preserving cultural heritage while upholding equal dignity and social progress for every member of the community.',
+        'Kurumbar Sangam – Tamil Nadu is a community organization dedicated to fostering unity, social welfare, evidence-based heritage preservation, and collective advancement across Tamil Nadu.',
+        'Our focus spans educational awareness, youth skill development, women’s empowerment, transparent historical documentation, and preserving cultural identity while upholding equal dignity for every community member.',
       ],
       photoCaption: 'Consultative meeting with association members and representatives',
       highlights: [
@@ -610,21 +870,22 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
         },
         {
           id: 'welfare',
-          title: 'Social Welfare',
+          title: 'Welfare & Rights Awareness',
           description:
-            'Encouraging community participation, collective support, and social initiatives grounded in equal dignity.',
+            'Promoting accurate awareness of constitutional classifications, lawful documentation procedures, and public welfare schemes.',
           icon: 'welfare',
         },
         {
           id: 'education',
-          title: 'Education & Progress',
+          title: 'Education & Heritage Archive',
           description:
-            'Promoting educational awareness, youth empowerment, and cultural heritage alongside modern social progress.',
+            'Advancing student guidance, youth skills, and historically responsible documentation backed by academic and government sources.',
           icon: 'education',
         },
       ],
     },
     president: {
+      sectionNumber: '27',
       eyebrow: 'State Leadership',
       heading: 'State President Profile',
       roleLine: 'State President',
@@ -632,6 +893,7 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       summary:
         'Leading Kurumbar Sangam – Tamil Nadu in uniting members across the state toward community solidarity, educational awareness, equal rights, and collective progress.',
       officialBadge: 'Official State Leadership',
+      portraitViewAriaLabel: 'President Portrait View',
       emblemTabLabel: 'Official Emblem',
       stageTabLabel: 'Stage Address',
       callBtn: 'Call: 9750602103',
@@ -643,6 +905,7 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       contactLabel: 'Official Contact Number',
     },
     visionMission: {
+      sectionNumber: '26',
       eyebrow: 'Guiding Principles',
       heading: 'Vision & Mission',
       subtitle: 'Building a united, educated, and progressive community grounded in equal dignity',
@@ -655,14 +918,15 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
         'Creating awareness and support for educational advancement.',
         'Encouraging skill development and opportunities for youth.',
         'Actively participating in community welfare initiatives.',
-        'Preserving cultural identity and heritage awareness.',
+        'Preserving cultural, linguistic, and historical heritage responsibly.',
       ],
     },
     events: {
+      sectionNumber: '23',
       eyebrow: 'Activities & Gatherings',
-      heading: 'Our Events & Activities',
+      heading: 'Events & Conferences',
       subtitle:
-        'Key public meetings, executive consultations, and community awareness programs of Kurumbar Sangam – Tamil Nadu.',
+        'Key public meetings, state-level conferences, executive consultations, and community awareness programs of Kurumbar Sangam – Tamil Nadu.',
       viewImageLabel: 'View Image',
       items: [
         {
@@ -723,10 +987,12 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       ],
     },
     gallery: {
+      sectionNumber: '24',
       eyebrow: 'Visual Archive',
       heading: 'Photo Gallery',
       subtitle:
         'Authentic photographs from Kurumbar Sangam meetings, leadership addresses, and official awareness posters. Click any image to view in the lightbox.',
+      filterAriaLabel: 'Gallery category filter',
       filters: {
         all: 'All',
         events: 'Events',
@@ -740,12 +1006,13 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       swipeHint: 'Use arrow keys or swipe left/right to navigate',
     },
     announcements: {
+      sectionNumber: '25',
       eyebrow: 'Notice Board',
-      heading: 'Announcements & Updates',
-      subtitle: 'Space dedicated to association notices, meeting bulletins, and awareness updates.',
+      heading: 'News & Announcements',
+      subtitle: 'Space dedicated to association notices, meeting bulletins, and official awareness posters.',
       demoBannerTitle: 'Demonstration Sample Content',
       demoBannerText:
-        'The cards below are clearly marked frontend-only demonstration placeholders and do not represent live official announcements. For verified updates, please contact the State President directly via phone or WhatsApp.',
+        'The three cards below are clearly marked frontend-only demonstration placeholders and do not represent live official announcements. For verified updates, please contact the State President directly via phone or WhatsApp.',
       demoBadge: 'Demo Sample',
       readMoreLabel: 'Read More',
       closeModalLabel: 'Close',
@@ -753,6 +1020,26 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       whatsappUpdatesPrefill:
         'Hello, I would like to receive verified updates and announcements from Kurumbar Sangam – Tamil Nadu.',
       postersHighlightTitle: 'Official Campaign Posters',
+      posters: [
+        {
+          id: 'awareness-poster-unity',
+          src: OFFICIAL_ASSETS.awarenessPosterUnity,
+          label: 'Unity Is Strength',
+          alt: 'Official Kurumbar Sangam Unity Is Strength awareness poster',
+        },
+        {
+          id: 'promotional-poster-green-gold',
+          src: OFFICIAL_ASSETS.promotionalPosterGreenGold,
+          label: 'Unite | Rise | Transform',
+          alt: 'Official Kurumbar Sangam Unite Rise Transform green and gold poster',
+        },
+        {
+          id: 'awareness-poster-equality',
+          src: OFFICIAL_ASSETS.awarenessPosterEquality,
+          label: 'Equality & Representation',
+          alt: 'Official Kurumbar Sangam Equality & Representation awareness poster',
+        },
+      ],
       items: [
         {
           id: 'sample-1',
@@ -787,10 +1074,11 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
       ],
     },
     contact: {
+      sectionNumber: '28',
       eyebrow: 'Get in Touch',
-      heading: 'Contact Us',
+      heading: 'Contact & WhatsApp',
       subtitle:
-        'Reach out directly to the State President via phone call or WhatsApp for association information and community inquiries.',
+        'Reach out directly to the State President via phone call or WhatsApp for association information, historical document submissions, and community inquiries.',
       officialCardTitle: 'Official Contact Details',
       mobileLabel: 'Mobile Number',
       callBtn: 'Call Now',
@@ -802,6 +1090,7 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
         'Fill in your details below to open a pre-formatted official message directly in WhatsApp.',
       frontendNotice:
         'Note: This is a frontend-only website with no backend server. Submitting via WhatsApp opens WhatsApp directly with your composed message to 9750602103.',
+      errorPrefixLabel: 'Error',
       fields: {
         nameLabel: 'Full Name',
         namePlaceholder: 'Enter your full name',
@@ -812,7 +1101,7 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
         mobileHint: 'Enter a 10-digit Indian mobile number',
         mobileError: 'Please enter a valid 10-digit mobile number.',
         subjectLabel: 'Subject',
-        subjectPlaceholder: 'e.g. Membership / Community Inquiry',
+        subjectPlaceholder: 'e.g. Membership / Historical Record Submission',
         subjectHint: 'Brief topic for your message',
         subjectError: 'Please enter a subject for your message.',
         messageLabel: 'Message',
@@ -832,14 +1121,37 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
     },
     footer: {
       description:
-        'Kurumbar Sangam – Tamil Nadu — uniting for social solidarity, equal rights, educational awareness, and community progress.',
-      quickLinksTitle: 'Quick Links',
+        'Kurumbar Sangam – Tamil Nadu — dedicated to community solidarity, evidence-based historical documentation, educational awareness, and collective progress.',
+      historyColumnTitle: 'History & Research',
+      developmentColumnTitle: 'Development & Media',
       officialContactTitle: 'Official Contact',
       presidentLabel: 'State President:',
       contactLabel: 'Contact:',
       whatsappCta: 'Connect on WhatsApp',
       copyright: '© 2026 Kurumbar Sangam – Tamil Nadu. All rights reserved.',
       backToTop: 'Back to top',
+      researchDisclaimer:
+        'Historical sections are compiled from peer-reviewed academic studies and official government records with linked source citations.',
+      historyLinks: [
+        { id: 'f-about', href: '#about', label: 'About Sangam' },
+        { id: 'f-history', href: '#history', label: 'Complete Kurumbar History' },
+        { id: 'f-ancient', href: '#ancient-references', label: 'Ancient References' },
+        { id: 'f-lifestyle', href: '#lifestyle', label: 'Lifestyle & Occupations' },
+        { id: 'f-culture', href: '#culture-heritage', label: 'Culture, Language & Arts' },
+        { id: 'f-geo', href: '#geographical-distribution', label: 'Geographical Distribution' },
+        { id: 'f-gov', href: '#government-records', label: 'Government Records & Status' },
+        { id: 'f-docs', href: '#documents-research', label: 'Research Bibliography' },
+      ],
+      developmentLinks: [
+        { id: 'f-ach', href: '#achievements', label: 'Community Achievements' },
+        { id: 'f-act', href: '#current-activities', label: 'Current Social Activities' },
+        { id: 'f-youth', href: '#youth-development', label: 'Youth & Women’s Development' },
+        { id: 'f-edu', href: '#educational-development', label: 'Education & Welfare' },
+        { id: 'f-events', href: '#events', label: 'Events & Conferences' },
+        { id: 'f-gallery', href: '#gallery', label: 'Photo Gallery' },
+        { id: 'f-news', href: '#announcements', label: 'News & Announcements' },
+        { id: 'f-pres', href: '#president', label: 'State President Profile' },
+      ],
     },
     whatsappWidget: {
       buttonLabel: 'WhatsApp Contact',
@@ -859,9 +1171,9 @@ export const SITE_CONTENT: Record<Language, SiteContent> = {
             'Hello Sir, I would like to inquire about upcoming meetings and events of Kurumbar Sangam – Tamil Nadu.',
         },
         {
-          label: 'Direct Inquiry / Consultation',
+          label: 'Share Historical Records',
           message:
-            'Hello K. P. Rajasimma Hegde Sir, I would like to connect regarding Kurumbar Sangam – Tamil Nadu.',
+            'Hello Sir, I would like to share verified historical records or documents with Kurumbar Sangam – Tamil Nadu.',
         },
       ],
       openDirectBtn: 'Start WhatsApp Chat',

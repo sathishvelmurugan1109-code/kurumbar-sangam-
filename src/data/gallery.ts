@@ -3,6 +3,8 @@ export type GalleryCategory = 'all' | 'events' | 'leader' | 'posters'
 export interface GalleryItem {
   id: string
   src: string
+  width: number
+  height: number
   category: Exclude<GalleryCategory, 'all'>
   displayMode: 'cover' | 'contain'
   objectPosition?: string
@@ -40,9 +42,11 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'president-emblem',
     src: OFFICIAL_ASSETS.presidentEmblemProfile,
+    width: 1024,
+    height: 1024,
     category: 'leader',
     displayMode: 'contain',
-    aspectClass: 'aspect-square',
+    aspectClass: 'aspect-[4/3]',
     title: {
       ta: 'குறும்பர் சங்கம் – அதிகாரப்பூர்வ இலச்சினை & தலைவர் தோற்றம்',
       en: 'Kurumbar Sangam – Official Emblem & President Portrait',
@@ -59,6 +63,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'public-meeting-podium',
     src: OFFICIAL_ASSETS.publicMeetingPodium,
+    width: 1024,
+    height: 696,
     category: 'events',
     displayMode: 'cover',
     objectPosition: 'object-[50%_18%]',
@@ -79,6 +85,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'leader-speech-stage',
     src: OFFICIAL_ASSETS.leaderSpeechStage,
+    width: 1024,
+    height: 682,
     category: 'leader',
     displayMode: 'cover',
     objectPosition: 'object-[50%_15%]',
@@ -99,6 +107,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'state-level-conference',
     src: OFFICIAL_ASSETS.stateLevelConference,
+    width: 1024,
+    height: 854,
     category: 'events',
     displayMode: 'cover',
     objectPosition: 'object-[50%_15%]',
@@ -123,10 +133,12 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'executive-meeting-hall',
     src: OFFICIAL_ASSETS.executiveMeetingHall,
+    width: 1024,
+    height: 576,
     category: 'events',
     displayMode: 'cover',
     objectPosition: 'object-[50%_18%]',
-    aspectClass: 'aspect-[16/10]',
+    aspectClass: 'aspect-[4/3]',
     title: {
       ta: 'நிர்வாகிகள் மற்றும் உறுப்பினர் ஆலோசனைக் கூட்டம்',
       en: 'Executive & Members Consultative Meeting',
@@ -143,9 +155,11 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'awareness-poster-unity',
     src: OFFICIAL_ASSETS.awarenessPosterUnity,
+    width: 682,
+    height: 1024,
     category: 'posters',
     displayMode: 'contain',
-    aspectClass: 'aspect-[2/3]',
+    aspectClass: 'aspect-[4/3]',
     title: {
       ta: 'அதிகாரப்பூர்வ சமூக விழிப்புணர்வு போஸ்டர் – ஒற்றுமையே பலம்',
       en: 'Official Social Awareness Poster – Unity Is Strength',
@@ -162,9 +176,11 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'promotional-poster-green-gold',
     src: OFFICIAL_ASSETS.promotionalPosterGreenGold,
+    width: 859,
+    height: 1024,
     category: 'posters',
     displayMode: 'contain',
-    aspectClass: 'aspect-[4/5]',
+    aspectClass: 'aspect-[4/3]',
     title: {
       ta: 'குறும்பர் சங்கம் – பச்சை மற்றும் தங்க நிற விழிப்புணர்வு போஸ்டர்',
       en: 'Kurumbar Sangam – Green & Gold Promotional Poster',
@@ -181,9 +197,11 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'awareness-poster-equality',
     src: OFFICIAL_ASSETS.awarenessPosterEquality,
+    width: 714,
+    height: 1024,
     category: 'posters',
     displayMode: 'contain',
-    aspectClass: 'aspect-[2/3]',
+    aspectClass: 'aspect-[4/3]',
     title: {
       ta: 'சமத்துவ விழிப்புணர்வு போஸ்டர்',
       en: 'Equality & Representation Awareness Poster',

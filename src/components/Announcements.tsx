@@ -1,7 +1,7 @@
 import { ArrowUpRight, Expand, Info, Megaphone, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { buildWhatsAppUrl, type SampleAnnouncement, type SiteContent } from '../data/content'
-import { OFFICIAL_ASSETS } from '../data/gallery'
+import { VerifiedPhotoFrame } from './MediaFrame'
 import { WhatsAppIcon } from './WhatsAppIcon'
 
 interface AnnouncementsProps {
@@ -74,23 +74,18 @@ export function Announcements({ content, onOpenImageById }: AnnouncementsProps) 
     <section
       id="announcements"
       aria-labelledby="announcements-heading"
-      className="bg-[#F8FAF4] py-16 sm:py-20 lg:py-24"
+      className="ks-section ks-deferred-section bg-[#F8FAF4]"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="ks-container">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#138447] sm:text-sm">
-            {content.announcements.eyebrow}
+          <p className="text-[0.82rem] font-extrabold uppercase tracking-[0.14em] text-[#138447] sm:text-sm">
+            {content.announcements.sectionNumber} • {content.announcements.eyebrow}
           </p>
-          <h2
-            id="announcements-heading"
-            className="mt-2 text-2xl font-extrabold tracking-tight text-[#023D24] sm:text-4xl"
-          >
+          <h2 id="announcements-heading" className="ks-h2 mt-2 font-extrabold text-[#023D24]">
             {content.announcements.heading}
           </h2>
-          <div className="ks-gold-rule mx-auto mt-4" aria-hidden="true" />
-          <p className="mt-4 text-sm text-[#436153] sm:text-base">
-            {content.announcements.subtitle}
-          </p>
+          <div className="ks-gold-rule mx-auto mt-3.5" aria-hidden="true" />
+          <p className="ks-body mt-4 text-[#355244]">{content.announcements.subtitle}</p>
         </div>
 
         {/* Clear Demonstration Disclaimer Banner */}
@@ -98,42 +93,42 @@ export function Announcements({ content, onOpenImageById }: AnnouncementsProps) 
           <div className="flex items-start gap-3">
             <Info className="mt-0.5 h-5 w-5 shrink-0 text-[#996F00]" aria-hidden="true" />
             <div>
-              <p className="text-sm font-extrabold text-[#5E4500]">
+              <p className="text-[0.95rem] font-extrabold text-[#5E4500] sm:text-base">
                 {content.announcements.demoBannerTitle}
               </p>
-              <p className="mt-1 text-xs leading-relaxed text-[#5E4500]/90 sm:text-sm">
+              <p className="mt-1.5 text-[0.9rem] leading-relaxed text-[#5E4500]/95">
                 {content.announcements.demoBannerText}
               </p>
             </div>
           </div>
         </div>
 
-        {/* Sample Announcement Cards */}
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
+        {/* Sample Announcement Cards (1-Col Mobile -> 3-Col Desktop) */}
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
           {content.announcements.items.map((item) => (
             <article
               key={item.id}
-              className="ks-reveal flex flex-col justify-between rounded-3xl border border-[#075B32]/14 bg-white p-6 shadow-[0_10px_28px_rgba(7,91,50,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-[#D9A928]/65"
+              className="ks-reveal flex flex-col justify-between rounded-2xl border border-[#075B32]/14 bg-white p-5 shadow-[0_10px_28px_rgba(7,91,50,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-[#D9A928]/65 sm:rounded-3xl sm:p-6"
             >
               <div>
                 <div className="flex items-center justify-between gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#D9A928]/55 bg-[#FFFBE8] px-3 py-1 text-[0.72rem] font-extrabold text-[#705300]">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#D9A928]/55 bg-[#FFFBE8] px-3 py-1 text-[0.8rem] font-extrabold text-[#705300]">
                     <Megaphone className="h-3.5 w-3.5" aria-hidden="true" />
                     {item.tag}
                   </span>
                 </div>
-                <h3 className="mt-4 text-base font-extrabold leading-snug text-[#023D24] sm:text-lg">
-                  {item.title}
-                </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-[#436153]">{item.summary}</p>
+                <h3 className="ks-h3 mt-4 font-extrabold text-[#023D24]">{item.title}</h3>
+                <p className="ks-body mt-2.5 text-[#355244]">{item.summary}</p>
               </div>
 
               <div className="mt-5 border-t border-[#075B32]/10 pt-4">
-                <p className="text-[0.72rem] font-semibold text-[#5C7769]">{item.note}</p>
+                <p className="text-[0.82rem] font-semibold leading-snug text-[#436153]">
+                  {item.note}
+                </p>
                 <button
                   type="button"
                   onClick={() => setSelectedItem(item)}
-                  className="mt-3 inline-flex cursor-pointer items-center gap-1.5 text-sm font-extrabold text-[#075B32] transition-colors hover:text-[#138447]"
+                  className="mt-3 inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 text-[0.95rem] font-extrabold text-[#075B32] transition-colors hover:text-[#138447]"
                 >
                   <span>{content.announcements.readMoreLabel}</span>
                   <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -143,11 +138,11 @@ export function Announcements({ content, onOpenImageById }: AnnouncementsProps) 
           ))}
         </div>
 
-        {/* Authentic Official Posters Visual Highlight Bar */}
-        <div className="ks-reveal mt-12 rounded-3xl border border-[#075B32]/15 bg-[#023D24] p-6 text-white shadow-[0_18px_45px_rgba(2,61,36,0.18)] sm:p-8">
+        {/* Official Campaign Posters Visual Bar */}
+        <div className="ks-reveal mt-10 rounded-2xl border border-[#075B32]/15 bg-[#023D24] p-5 text-white shadow-[0_16px_40px_rgba(2,61,36,0.18)] sm:mt-12 sm:rounded-3xl sm:p-8">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <div>
-              <h3 className="text-lg font-extrabold text-[#FFD629] sm:text-xl">
+              <h3 className="ks-h3 font-extrabold text-[#FFD629]">
                 {content.announcements.postersHighlightTitle}
               </h3>
             </div>
@@ -155,7 +150,7 @@ export function Announcements({ content, onOpenImageById }: AnnouncementsProps) 
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-[#19994A] px-4 py-2.5 text-xs font-bold text-white shadow-md transition-colors hover:bg-[#1EB056] sm:text-sm"
+              className="inline-flex min-h-[46px] w-full items-center justify-center gap-2 rounded-xl bg-[#19994A] px-4 py-2.5 text-[0.94rem] font-bold text-white shadow-md transition-colors hover:bg-[#1EB056] sm:w-auto"
             >
               <WhatsAppIcon className="h-4 w-4 shrink-0" />
               <span>{content.announcements.whatsappUpdatesCta}</span>
@@ -163,42 +158,27 @@ export function Announcements({ content, onOpenImageById }: AnnouncementsProps) 
           </div>
 
           <div className="mt-6 grid gap-5 sm:grid-cols-3">
-            {[
-              {
-                id: 'awareness-poster-unity',
-                src: OFFICIAL_ASSETS.awarenessPosterUnity,
-                label: 'ஒற்றுமையே பலம்',
-              },
-              {
-                id: 'promotional-poster-green-gold',
-                src: OFFICIAL_ASSETS.promotionalPosterGreenGold,
-                label: 'ஒன்றுபடுவோம் | உயர்வோம் | மாற்றுவோம்',
-              },
-              {
-                id: 'awareness-poster-equality',
-                src: OFFICIAL_ASSETS.awarenessPosterEquality,
-                label: 'சமத்துவ விழிப்புணர்வு',
-              },
-            ].map((poster) => (
+            {content.announcements.posters.map((poster) => (
               <button
                 key={poster.id}
                 type="button"
                 onClick={() => onOpenImageById(poster.id)}
                 className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-[#D9A928]/40 bg-[#012817] p-2.5 text-left transition-transform duration-300 hover:-translate-y-1"
               >
-                <div className="aspect-[3/4] w-full overflow-hidden rounded-xl bg-[#011F12]">
-                  <img
-                    src={poster.src}
-                    alt={poster.label}
-                    loading="lazy"
-                    width={360}
-                    height={480}
-                    className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
-                  />
-                </div>
-                <div className="mt-2.5 flex items-center justify-between gap-2 px-1">
-                  <span className="truncate text-xs font-bold text-[#F5E2A3]">{poster.label}</span>
-                  <Expand className="h-3.5 w-3.5 shrink-0 text-[#FFD629]" aria-hidden="true" />
+                <VerifiedPhotoFrame
+                  src={poster.src}
+                  alt={poster.alt}
+                  variant="profile"
+                  fit="contain"
+                  roundedClass="rounded-xl"
+                  bgClass="bg-[#011F12]"
+                  imgClassName="transition-transform duration-300 group-hover:scale-[1.02]"
+                />
+                <div className="mt-3 flex min-h-[36px] items-center justify-between gap-2 px-1.5">
+                  <span className="text-[0.875rem] font-bold leading-snug text-[#F5E2A3]">
+                    {poster.label}
+                  </span>
+                  <Expand className="h-4 w-4 shrink-0 text-[#FFD629]" aria-hidden="true" />
                 </div>
               </button>
             ))}
@@ -211,16 +191,16 @@ export function Announcements({ content, onOpenImageById }: AnnouncementsProps) 
         ref={dialogRef}
         aria-labelledby="announcement-modal-title"
         {...({ closedby: 'any' } as Record<string, string>)}
-        className="m-auto w-[min(92vw,36rem)] flex-col overflow-hidden rounded-3xl border border-[#D9A928]/50 bg-white text-[#183527] shadow-2xl"
+        className="m-auto w-[min(94dvw,36rem)] max-h-[90dvh] flex-col overflow-hidden rounded-3xl border border-[#D9A928]/50 bg-white text-[#183527] shadow-2xl"
       >
         {selectedItem && (
           <>
-            <div className="flex items-start justify-between gap-3 bg-[#023D24] px-6 py-4 text-white">
+            <div className="flex items-start justify-between gap-3 bg-[#023D24] px-5 py-4 text-white sm:px-6">
               <div>
-                <span className="inline-block rounded-full bg-[#FFD629] px-2.5 py-0.5 text-[0.7rem] font-extrabold text-[#023D24]">
+                <span className="inline-block rounded-full bg-[#FFD629] px-3 py-0.5 text-[0.78rem] font-extrabold text-[#023D24]">
                   {selectedItem.tag}
                 </span>
-                <h3 id="announcement-modal-title" className="mt-2 text-base font-extrabold sm:text-lg">
+                <h3 id="announcement-modal-title" className="ks-h3 mt-2 font-extrabold">
                   {selectedItem.title}
                 </h3>
               </div>
@@ -229,23 +209,23 @@ export function Announcements({ content, onOpenImageById }: AnnouncementsProps) 
                   type="submit"
                   autoFocus
                   aria-label={content.announcements.closeModalLabel}
-                  className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white hover:bg-[#FFD629] hover:text-[#023D24]"
+                  className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white hover:bg-[#FFD629] hover:text-[#023D24]"
                 >
                   <X className="h-5 w-5" aria-hidden="true" />
                 </button>
               </form>
             </div>
-            <div className="p-6">
-              <p className="text-sm leading-relaxed text-[#183527]">{selectedItem.details}</p>
-              <p className="mt-4 rounded-xl bg-[#FFFBE8] p-3 text-xs font-semibold text-[#694E00]">
+            <div className="overflow-y-auto p-5 sm:p-6">
+              <p className="ks-body text-[#183527]">{selectedItem.details}</p>
+              <p className="mt-4 rounded-xl bg-[#FFFBE8] p-3.5 text-[0.875rem] font-semibold text-[#694E00]">
                 {selectedItem.note}
               </p>
-              <div className="mt-5 flex flex-wrap justify-end gap-2.5">
+              <div className="mt-5 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:justify-end">
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl bg-[#19994A] px-4 py-2.5 text-xs font-bold text-white hover:bg-[#1EB056]"
+                  className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-[#19994A] px-4 py-2.5 text-[0.94rem] font-bold text-white hover:bg-[#1EB056]"
                 >
                   <WhatsAppIcon className="h-4 w-4" />
                   <span>{content.announcements.whatsappUpdatesCta}</span>
@@ -253,7 +233,7 @@ export function Announcements({ content, onOpenImageById }: AnnouncementsProps) 
                 <form method="dialog">
                   <button
                     type="submit"
-                    className="cursor-pointer rounded-xl border border-[#075B32]/25 px-4 py-2.5 text-xs font-bold text-[#023D24] hover:bg-[#EFF5E9]"
+                    className="min-h-[46px] w-full cursor-pointer rounded-xl border border-[#075B32]/25 px-5 py-2.5 text-[0.94rem] font-bold text-[#023D24] hover:bg-[#EFF5E9] sm:w-auto"
                   >
                     {content.announcements.closeModalLabel}
                   </button>

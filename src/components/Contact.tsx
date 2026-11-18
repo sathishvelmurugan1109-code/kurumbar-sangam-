@@ -2,6 +2,8 @@ import { Check, CheckCircle2, Copy, Info, Phone, RotateCcw, Send } from 'lucide-
 import { useEffect, useRef, useState } from 'react'
 import { buildWhatsAppUrl, OFFICIAL_INFO, type Language, type SiteContent } from '../data/content'
 import { OFFICIAL_ASSETS } from '../data/gallery'
+import { copyToClipboard } from '../utils/clipboard'
+import { toWebpSrc } from '../utils/media'
 import { WhatsAppIcon } from './WhatsAppIcon'
 
 interface ContactProps {
@@ -31,7 +33,8 @@ export function Contact({ content, language }: ContactProps) {
   const formRef = useRef<HTMLFormElement>(null)
   const announceTimerRef = useRef<number | null>(null)
 
-  // Synchronize aria-invalid & dynamic aria-describedby with :user-invalid (plus JS fallback)
+  const emblemWebp = toWebpSrc(OFFICIAL_ASSETS.presidentEmblemProfile)
+
   useEffect(() => {
     const form = formRef.current
     if (!form) return
@@ -146,19 +149,7 @@ export function Contact({ content, language }: ContactProps) {
   }
 
   const handleCopyNumber = async () => {
-    try {
-      await navigator.clipboard.writeText(OFFICIAL_INFO.phoneDisplay)
-    } catch {
-      const textarea = document.createElement('textarea')
-      textarea.value = OFFICIAL_INFO.phoneDisplay
-      textarea.setAttribute('readonly', '')
-      textarea.style.position = 'fixed'
-      textarea.style.opacity = '0'
-      document.body.appendChild(textarea)
-      textarea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textarea)
-    }
+    await copyToClipboard(OFFICIAL_INFO.phoneDisplay)
     setCopied(true)
     window.setTimeout(() => setCopied(false), 2600)
   }
@@ -186,10 +177,12 @@ export function Contact({ content, language }: ContactProps) {
     const form = formRef.current
     if (form) {
       form.reset()
-      form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea').forEach((el) => {
-        el.classList.remove('user-invalid-fallback', 'user-valid-fallback')
-        el.setAttribute('aria-invalid', 'false')
-      })
+      form
+        .querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea')
+        .forEach((el) => {
+          el.classList.remove('user-invalid-fallback', 'user-valid-fallback')
+          el.setAttribute('aria-invalid', 'false')
+        })
     }
   }
 
@@ -199,75 +192,72 @@ export function Contact({ content, language }: ContactProps) {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="bg-[#EFF5E9] py-16 sm:py-20 lg:py-24"
+      className="ks-section ks-deferred-section bg-[#EFF5E9]"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="ks-container">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#138447] sm:text-sm">
-            {content.contact.eyebrow}
+          <p className="text-[0.82rem] font-extrabold uppercase tracking-[0.14em] text-[#138447] sm:text-sm">
+            {content.contact.sectionNumber} • {content.contact.eyebrow}
           </p>
-          <h2
-            id="contact-heading"
-            className="mt-2 text-2xl font-extrabold tracking-tight text-[#023D24] sm:text-4xl"
-          >
+          <h2 id="contact-heading" className="ks-h2 mt-2 font-extrabold text-[#023D24]">
             {content.contact.heading}
           </h2>
-          <div className="ks-gold-rule mx-auto mt-4" aria-hidden="true" />
-          <p className="mt-4 text-sm text-[#436153] sm:text-base">{content.contact.subtitle}</p>
+          <div className="ks-gold-rule mx-auto mt-3.5" aria-hidden="true" />
+          <p className="ks-body mt-4 text-[#355244]">{content.contact.subtitle}</p>
         </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-12">
+        <div className="mt-10 grid gap-7 lg:grid-cols-12">
           {/* Left: Official Contact Card */}
-          <aside className="ks-reveal flex flex-col justify-between overflow-hidden rounded-3xl border border-[#D9A928]/45 bg-gradient-to-br from-[#023D24] via-[#054A2A] to-[#075B32] p-6 text-white shadow-[0_20px_50px_rgba(2,61,36,0.22)] sm:p-8 lg:col-span-5">
+          <aside className="ks-reveal flex flex-col justify-between overflow-hidden rounded-2xl border border-[#D9A928]/45 bg-gradient-to-br from-[#023D24] via-[#054A2A] to-[#075B32] p-5 text-white shadow-[0_18px_46px_rgba(2,61,36,0.22)] sm:rounded-3xl sm:p-8 lg:col-span-5">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#FFD629]">
+              <p className="text-[0.82rem] font-extrabold uppercase tracking-[0.14em] text-[#FFD629]">
                 {content.contact.officialCardTitle}
               </p>
 
               <div className="mt-5 flex items-center gap-4">
-                <div className="h-20 w-20 shrink-0 overflow-hidden rounded-full border-2 border-[#FFD629] bg-white shadow-lg">
-                  <img
-                    src={OFFICIAL_ASSETS.presidentEmblemProfile}
-                    alt={content.meta.presidentName}
-                    loading="lazy"
-                    width={80}
-                    height={80}
-                    className="h-full w-full object-contain"
-                  />
+                <div className="h-18 w-18 shrink-0 overflow-hidden rounded-full border-2 border-[#FFD629] bg-white shadow-lg sm:h-20 sm:w-20">
+                  <picture className="block h-full w-full">
+                    {emblemWebp && <source srcSet={emblemWebp} type="image/webp" />}
+                    <img
+                      src={OFFICIAL_ASSETS.presidentEmblemProfile}
+                      alt={content.meta.presidentName}
+                      loading="lazy"
+                      width={80}
+                      height={80}
+                      className="block h-full w-full object-contain"
+                    />
+                  </picture>
                 </div>
                 <div className="min-w-0">
-                  <h3 className="text-xl font-extrabold leading-tight text-white">
-                    {content.meta.presidentName}
-                  </h3>
-                  <p className="mt-1 text-sm font-bold text-[#FFD629]">
+                  <h3 className="ks-h3 font-extrabold text-white">{content.meta.presidentName}</h3>
+                  <p className="mt-1 text-[0.9rem] font-bold text-[#FFD629]">
                     {OFFICIAL_INFO.qualification}
                   </p>
-                  <p className="mt-0.5 text-xs font-semibold text-[#E2EFE7] sm:text-sm">
+                  <p className="mt-0.5 text-[0.875rem] font-semibold text-[#E2EFE7]">
                     {content.president.roleLine}
                   </p>
-                  <p className="text-xs font-semibold text-[#F5E2A3]">
+                  <p className="text-[0.85rem] font-semibold text-[#F5E2A3]">
                     {content.meta.orgName}
                   </p>
                 </div>
               </div>
 
               <div className="mt-6 rounded-2xl border border-white/15 bg-[#012B19]/65 p-4">
-                <p className="text-xs font-bold uppercase tracking-wider text-[#FFD629]">
+                <p className="text-[0.82rem] font-bold uppercase tracking-wider text-[#FFD629]">
                   {content.contact.mobileLabel}
                 </p>
                 <a
                   href={OFFICIAL_INFO.phoneTel}
-                  className="mt-1 block text-2xl font-extrabold tracking-wider text-white hover:text-[#FFD629]"
+                  className="mt-1 inline-flex min-h-[44px] items-center text-2xl font-extrabold tracking-wider text-white hover:text-[#FFD629]"
                 >
                   {OFFICIAL_INFO.phoneDisplay}
                 </a>
               </div>
 
-              {/* Three Official Action Buttons */}
               <div className="mt-6 grid gap-3">
                 <a
                   href={OFFICIAL_INFO.phoneTel}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#FFD629] to-[#D9A928] px-5 py-3.5 text-sm font-extrabold text-[#023D24] shadow-md transition-all hover:brightness-105"
+                  className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#FFD629] to-[#D9A928] px-5 py-3 text-[0.95rem] font-extrabold text-[#023D24] shadow-md transition-all hover:brightness-105"
                 >
                   <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
                   <span>
@@ -279,7 +269,7 @@ export function Contact({ content, language }: ContactProps) {
                   href={directWhatsAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#19994A] px-5 py-3.5 text-sm font-extrabold text-white shadow-md transition-colors hover:bg-[#1EB056]"
+                  className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-[#19994A] px-5 py-3 text-[0.95rem] font-extrabold text-white shadow-md transition-colors hover:bg-[#1EB056]"
                 >
                   <WhatsAppIcon className="h-5 w-5 shrink-0" />
                   <span>{content.contact.whatsappBtn}</span>
@@ -288,7 +278,7 @@ export function Contact({ content, language }: ContactProps) {
                 <button
                   type="button"
                   onClick={handleCopyNumber}
-                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#FFD629]/50 bg-white/10 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-white/20"
+                  className="inline-flex min-h-[48px] cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#FFD629]/50 bg-white/10 px-5 py-3 text-[0.95rem] font-bold text-white transition-colors hover:bg-white/20"
                 >
                   {copied ? (
                     <>
@@ -305,43 +295,38 @@ export function Contact({ content, language }: ContactProps) {
               </div>
             </div>
 
-            <div className="mt-8 border-t border-white/15 pt-4 text-xs font-semibold text-[#F5E2A3]">
+            <div className="mt-8 border-t border-white/15 pt-4 text-[0.875rem] font-semibold text-[#F5E2A3]">
               {content.meta.motto}
             </div>
           </aside>
 
           {/* Right: Frontend-Only Contact & WhatsApp Composer Form */}
-          <div className="ks-reveal rounded-3xl border border-[#075B32]/15 bg-white p-6 shadow-[0_14px_38px_rgba(7,91,50,0.08)] sm:p-8 lg:col-span-7">
-            <h3 className="text-xl font-extrabold text-[#023D24] sm:text-2xl">
-              {content.contact.formTitle}
-            </h3>
-            <p className="mt-1.5 text-sm text-[#436153]">{content.contact.formSubtitle}</p>
+          <div className="ks-reveal rounded-2xl border border-[#075B32]/15 bg-white p-5 shadow-[0_14px_38px_rgba(7,91,50,0.08)] sm:rounded-3xl sm:p-8 lg:col-span-7">
+            <h3 className="ks-h2 font-extrabold text-[#023D24]">{content.contact.formTitle}</h3>
+            <p className="ks-body mt-1.5 text-[#355244]">{content.contact.formSubtitle}</p>
 
-            <div className="mt-4 flex items-start gap-2.5 rounded-xl border border-[#075B32]/15 bg-[#F8FAF4] p-3.5 text-xs text-[#2B4E3C]">
+            <div className="mt-4 flex items-start gap-2.5 rounded-xl border border-[#075B32]/15 bg-[#F8FAF4] p-3.5 text-[0.875rem] leading-relaxed text-[#2B4E3C]">
               <Info className="mt-0.5 h-4 w-4 shrink-0 text-[#075B32]" aria-hidden="true" />
               <span>{content.contact.frontendNotice}</span>
             </div>
 
-            {/* Polite live region for screen-reader error announcements */}
             <div aria-live="polite" className="visually-hidden">
               {liveAnnouncement}
             </div>
 
-            <form
-              ref={formRef}
-              onSubmit={handleWhatsAppSubmit}
-              className="mt-6 space-y-5"
-            >
+            <form ref={formRef} onSubmit={handleWhatsAppSubmit} className="mt-6 space-y-5">
               <div className="grid gap-5 sm:grid-cols-2">
-                {/* Name Field */}
                 <div>
                   <label
                     htmlFor="contact-name"
-                    className="block text-sm font-bold text-[#023D24]"
+                    className="block text-[0.95rem] font-bold text-[#023D24]"
                   >
                     {content.contact.fields.nameLabel} <span className="text-[#b71c1c]">*</span>
                   </label>
-                  <span id="contact-name-hint" className="mb-1.5 mt-0.5 block text-xs text-[#557263]">
+                  <span
+                    id="contact-name-hint"
+                    className="mb-1.5 mt-0.5 block text-[0.84rem] text-[#436153]"
+                  >
                     {content.contact.fields.nameHint}
                   </span>
                   <input
@@ -359,24 +344,23 @@ export function Contact({ content, language }: ContactProps) {
                     className="ks-input"
                   />
                   <div id="contact-name-error" className="ks-error-msg">
-                    <span role="img" aria-label="Error">
+                    <span role="img" aria-label={content.contact.errorPrefixLabel}>
                       ⚠
                     </span>
                     <span>{content.contact.fields.nameError}</span>
                   </div>
                 </div>
 
-                {/* Mobile Field */}
                 <div>
                   <label
                     htmlFor="contact-mobile"
-                    className="block text-sm font-bold text-[#023D24]"
+                    className="block text-[0.95rem] font-bold text-[#023D24]"
                   >
                     {content.contact.fields.mobileLabel} <span className="text-[#b71c1c]">*</span>
                   </label>
                   <span
                     id="contact-mobile-hint"
-                    className="mb-1.5 mt-0.5 block text-xs text-[#557263]"
+                    className="mb-1.5 mt-0.5 block text-[0.84rem] text-[#436153]"
                   >
                     {content.contact.fields.mobileHint}
                   </span>
@@ -401,7 +385,7 @@ export function Contact({ content, language }: ContactProps) {
                     className="ks-input"
                   />
                   <div id="contact-mobile-error" className="ks-error-msg">
-                    <span role="img" aria-label="Error">
+                    <span role="img" aria-label={content.contact.errorPrefixLabel}>
                       ⚠
                     </span>
                     <span>{content.contact.fields.mobileError}</span>
@@ -409,17 +393,16 @@ export function Contact({ content, language }: ContactProps) {
                 </div>
               </div>
 
-              {/* Subject Field */}
               <div>
                 <label
                   htmlFor="contact-subject"
-                  className="block text-sm font-bold text-[#023D24]"
+                  className="block text-[0.95rem] font-bold text-[#023D24]"
                 >
                   {content.contact.fields.subjectLabel} <span className="text-[#b71c1c]">*</span>
                 </label>
                 <span
                   id="contact-subject-hint"
-                  className="mb-1.5 mt-0.5 block text-xs text-[#557263]"
+                  className="mb-1.5 mt-0.5 block text-[0.84rem] text-[#436153]"
                 >
                   {content.contact.fields.subjectHint}
                 </span>
@@ -437,24 +420,23 @@ export function Contact({ content, language }: ContactProps) {
                   className="ks-input"
                 />
                 <div id="contact-subject-error" className="ks-error-msg">
-                  <span role="img" aria-label="Error">
+                  <span role="img" aria-label={content.contact.errorPrefixLabel}>
                     ⚠
                   </span>
                   <span>{content.contact.fields.subjectError}</span>
                 </div>
               </div>
 
-              {/* Message Field */}
               <div>
                 <label
                   htmlFor="contact-message"
-                  className="block text-sm font-bold text-[#023D24]"
+                  className="block text-[0.95rem] font-bold text-[#023D24]"
                 >
                   {content.contact.fields.messageLabel} <span className="text-[#b71c1c]">*</span>
                 </label>
                 <span
                   id="contact-message-hint"
-                  className="mb-1.5 mt-0.5 block text-xs text-[#557263]"
+                  className="mb-1.5 mt-0.5 block text-[0.84rem] text-[#436153]"
                 >
                   {content.contact.fields.messageHint}
                 </span>
@@ -472,18 +454,17 @@ export function Contact({ content, language }: ContactProps) {
                   className="ks-input resize-y"
                 />
                 <div id="contact-message-error" className="ks-error-msg">
-                  <span role="img" aria-label="Error">
+                  <span role="img" aria-label={content.contact.errorPrefixLabel}>
                     ⚠
                   </span>
                   <span>{content.contact.fields.messageError}</span>
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap">
                 <button
                   type="submit"
-                  className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#178F45] px-6 py-3.5 text-sm font-extrabold text-white shadow-[0_8px_20px_rgba(23,143,69,0.28)] transition-all hover:bg-[#1BA54F]"
+                  className="inline-flex min-h-[48px] flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#178F45] px-6 py-3 text-[0.95rem] font-extrabold text-white shadow-[0_8px_20px_rgba(23,143,69,0.28)] transition-all hover:bg-[#1BA54F]"
                 >
                   <WhatsAppIcon className="h-5 w-5 shrink-0" />
                   <span>{content.contact.submitWhatsAppBtn}</span>
@@ -492,7 +473,7 @@ export function Contact({ content, language }: ContactProps) {
                 <button
                   type="button"
                   onClick={handleDemoValidate}
-                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#075B32] px-5 py-3.5 text-sm font-bold text-[#FFD629] transition-colors hover:bg-[#023D24]"
+                  className="inline-flex min-h-[48px] cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#075B32] px-5 py-3 text-[0.95rem] font-bold text-[#FFD629] transition-colors hover:bg-[#023D24]"
                 >
                   <Send className="h-4 w-4 shrink-0" aria-hidden="true" />
                   <span>{content.contact.submitDemoBtn}</span>
@@ -501,7 +482,7 @@ export function Contact({ content, language }: ContactProps) {
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-[#075B32]/25 px-4 py-3.5 text-sm font-bold text-[#183527] transition-colors hover:bg-[#EFF5E9]"
+                  className="inline-flex min-h-[48px] cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-[#075B32]/25 px-4 py-3 text-[0.95rem] font-bold text-[#183527] transition-colors hover:bg-[#EFF5E9]"
                 >
                   <RotateCcw className="h-4 w-4 shrink-0" aria-hidden="true" />
                   <span>{content.contact.resetBtn}</span>
@@ -509,7 +490,6 @@ export function Contact({ content, language }: ContactProps) {
               </div>
             </form>
 
-            {/* Transparent Frontend-Only Demo Confirmation Box */}
             {demoConfirmed && (
               <div
                 role="status"
@@ -521,13 +501,13 @@ export function Contact({ content, language }: ContactProps) {
                     aria-hidden="true"
                   />
                   <div className="min-w-0 flex-1">
-                    <h4 className="text-sm font-extrabold text-[#023D24]">
+                    <h4 className="text-[1rem] font-extrabold text-[#023D24]">
                       {content.contact.demoSuccessTitle}
                     </h4>
-                    <p className="mt-1 text-xs leading-relaxed text-[#2C5340] sm:text-sm">
+                    <p className="mt-1 text-[0.9rem] leading-relaxed text-[#2C5340]">
                       {content.contact.demoSuccessText}
                     </p>
-                    <div className="mt-3 rounded-xl bg-white p-3 text-xs text-[#183527] shadow-xs">
+                    <div className="mt-3 rounded-xl bg-white p-3.5 text-[0.875rem] text-[#183527] shadow-xs">
                       <p>
                         <strong>{content.contact.fields.nameLabel}:</strong> {demoConfirmed.name}
                       </p>
@@ -544,7 +524,7 @@ export function Contact({ content, language }: ContactProps) {
                       href={buildWhatsAppUrl(composeWhatsAppMessage(demoConfirmed))}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-3.5 inline-flex items-center gap-2 rounded-xl bg-[#178F45] px-4 py-2 text-xs font-extrabold text-white hover:bg-[#1BA54F]"
+                      className="mt-3.5 inline-flex min-h-[46px] items-center gap-2 rounded-xl bg-[#178F45] px-4 py-2.5 text-[0.94rem] font-extrabold text-white hover:bg-[#1BA54F]"
                     >
                       <WhatsAppIcon className="h-4 w-4" />
                       <span>{content.contact.sendCapturedViaWhatsApp}</span>
